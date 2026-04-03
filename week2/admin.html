@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Mahasiswa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="h-full bg-gray-100">
+    <div class="flex h-full">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="bg-blue-800 text-white h-full transition-all duration-300 w-20 lg:w-64"
+      >
+        <div
+          class="flex justify-between items-center p-4 border-b border-blue-700"
+        >
+          <span class="text-2xl font-bold hidden lg:block">Admin</span>
+        </div>
+        <nav class="p-4 space-y-2">
+          <a
+            href="#"
+            class="flex items-center space-x-2 px-4 py-2 rounded hover:bg-blue-700"
+          >
+            <span class="text-lg">🏠</span>
+            <span class="menu-text hidden lg:inline">Dashboard</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-2 px-4 py-2 rounded bg-blue-700"
+          >
+            <span class="text-lg">🎓</span>
+            <span class="menu-text hidden lg:inline">Mahasiswa</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="flex flex-col flex-1">
+        <!-- Header -->
+        <header class="bg-white shadow-md">
+          <div class="flex justify-between items-center px-6 py-4">
+            <h1 class="text-2xl font-bold text-gray-800">Mahasiswa</h1>
+            <div class="relative">
+              <button
+                onclick="toggleProfileMenu()"
+                class="w-8 h-8 rounded-full bg-gray-300 focus:outline-none"
+              ></button>
+              <div
+                id="profileMenu"
+                class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-2 hidden"
+              >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >Profile</a
+                >
+                <button
+                  onclick="logout()"
+                  class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 overflow-x-auto">
+          <div class="bg-white shadow rounded-lg p-4">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-lg font-bold">Daftar Mahasiswa</h2>
+              <button
+                onclick="openModal()"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              >
+                + Tambah Mahasiswa
+              </button>
+            </div>
+            <table class="w-full text-sm text-gray-700">
+              <thead class="bg-blue-600 text-white">
+                <tr>
+                  <th class="py-2 px-4 text-left">NIM</th>
+                  <th class="py-2 px-4 text-left">Nama</th>
+                  <th class="py-2 px-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="even:bg-gray-100 odd:bg-white">
+                  <td class="py-2 px-4">20211002</td>
+                  <td class="py-2 px-4">Siti Aminah</td>
+                  <td class="py-2 px-4 text-center space-x-2">
+                    <button
+                      class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                      onclick="editMahasiswa(this)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      onclick="deleteMahasiswa(this)"
+                    >
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+                <tr class="even:bg-gray-100 odd:bg-white">
+                  <td class="py-2 px-4">20211003</td>
+                  <td class="py-2 px-4">Ahmad Fauzi</td>
+                  <td class="py-2 px-4 text-center space-x-2">
+                    <button
+                      class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                      onclick="editMahasiswa(this)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      onclick="deleteMahasiswa(this)"
+                    >
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+                <tr class="even:bg-gray-100 odd:bg-white">
+                  <td class="py-2 px-4">20211004</td>
+                  <td class="py-2 px-4">Dewi Lestari</td>
+                  <td class="py-2 px-4 text-center space-x-2">
+                    <button
+                      class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                      onclick="editMahasiswa(this)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      onclick="deleteMahasiswa(this)"
+                    >
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+                <tr class="even:bg-gray-100 odd:bg-white">
+                  <td class="py-2 px-4">20211005</td>
+                  <td class="py-2 px-4">Rudi Hartono</td>
+                  <td class="py-2 px-4 text-center space-x-2">
+                    <button
+                      class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                      onclick="editMahasiswa(this)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      onclick="deleteMahasiswa(this)"
+                    >
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+                <tr class="even:bg-gray-100 odd:bg-white">
+                  <td class="py-2 px-4">20211001</td>
+                  <td class="py-2 px-4">Budi Santoso</td>
+                  <td class="py-2 px-4 text-center space-x-2">
+                    <button
+                      class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                      onclick="editMahasiswa(this)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      onclick="deleteMahasiswa(this)"
+                    >
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white text-center py-4 shadow-inner">
+          <p class="text-sm text-gray-600">
+            © 2025 Admin Dashboard. All rights reserved.
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      id="modal"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden"
+    >
+      <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
+        <div class="flex justify-between items-center p-4 border-b">
+          <h2 id="modalTitle" class="text-lg font-bold">Tambah Mahasiswa</h2>
+          <button
+            onclick="closeModal()"
+            class="text-gray-600 hover:text-red-500"
+          >
+            &times;
+          </button>
+        </div>
+        <form
+          id="mahasiswaForm"
+          class="p-4 space-y-4"
+          onsubmit="submitForm(event)"
+        >
+          <div>
+            <label for="nim" class="block text-sm font-medium">NIM</label>
+            <input
+              type="text"
+              id="nim"
+              name="nim"
+              required
+              class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
+            />
+          </div>
+          <div>
+            <label for="nama" class="block text-sm font-medium">Nama</label>
+            <input
+              type="text"
+              id="nama"
+              name="nama"
+              required
+              class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
+            />
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button
+              type="button"
+              onclick="closeModal()"
+              class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+            >
+              Batal
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Simpan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+      function toggleProfileMenu() {
+        document.getElementById("profileMenu").classList.toggle("hidden");
+      }
+
+      function logout() {
+        alert("Logout berhasil!");
+      }
+
+      function openModal(editMode = false, row = null) {
+        document.getElementById("modal").classList.remove("hidden");
+        document.getElementById("mahasiswaForm").reset();
+      }
+
+      function closeModal() {
+        document.getElementById("modal").classList.add("hidden");
+      }
+
+      function submitForm(event) {
+        event.preventDefault();
+        alert("Mahasiswa berhasil ditambah!");
+        closeModal();
+      }
+
+      function editMahasiswa(button) {
+        alert("Mahasiswa berhasil di-edit! hehe");
+      }
+
+      function deleteMahasiswa(button) {
+        if (confirm("Apakah Anda yakin ingin menghapus mahasiswa ini?")) {
+          alert("Mahasiswa berhasil terhapus!");
+        }
+      }
+    </script>
+  </body>
+</html>
