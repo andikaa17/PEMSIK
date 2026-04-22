@@ -6,6 +6,12 @@ const baseSizes = {
   h5: "text-lg font-medium",
 };
 
+const alignClasses = {
+  left: "text-left",
+  center: "text-center",
+  right: "text-right",
+};
+
 const Heading = ({
   as = "h1",
   children,
@@ -17,9 +23,13 @@ const Heading = ({
 }) => {
   const Tag = as;
   const baseClass = baseSizes[as] || baseSizes.h1;
+  const textAlign = alignClasses[align] || "text-center";
 
   return (
-    <Tag className={`${baseClass} text-${align} ${color} ${spacing} ${className}`} {...props}>
+    <Tag
+      className={`${baseClass} ${textAlign} ${color} ${spacing} ${className}`}
+      {...props}
+    >
       {children}
     </Tag>
   );
