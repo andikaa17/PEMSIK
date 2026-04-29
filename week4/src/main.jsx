@@ -6,6 +6,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+import { Toaster } from "react-hot-toast";
+
 import "./App.css";
 
 import AuthLayout from "@/Pages/Auth/AuthLayout";
@@ -68,6 +70,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <>
+      <Toaster position="top-right" />
+      <RouterProvider router={router} />
+    </>
   </React.StrictMode>,
 );

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "@/Pages/Admin/Components/Button";
 import Input from "@/Pages/Auth/Components/Input";
 import Label from "@/Pages/Auth/Components/Label";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const MahasiswaModal = ({
   isModalOpen,
@@ -44,19 +45,19 @@ const MahasiswaModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.nim || !form.nama) {
-      alert("Data kurang terisi");
+    if (!form.nim.trim() || !form.nama.trim()) {
+      toastError("Data kurang terisi");
       return;
     }
 
     const exists = mahasiswa.find(
       (m) =>
         m.nim === form.nim &&
-        (!selectedMahasiswa || m.nim !== selectedMahasiswa.nim),
+        (!selectedMahasiswa || m.nim !== selectedMahasiswa.nim)
     );
 
     if (exists) {
-      alert("NIM sudah terdaftar!");
+      toastError("NIM sudah terdaftar!");
       return;
     }
 
@@ -98,7 +99,6 @@ const MahasiswaModal = ({
               onChange={handleChange}
               readOnly={!!selectedMahasiswa}
               placeholder="Masukkan NIM"
-              required
             />
           </div>
 
@@ -110,7 +110,6 @@ const MahasiswaModal = ({
               value={form.nama}
               onChange={handleChange}
               placeholder="Masukkan Nama"
-              required
             />
           </div>
 

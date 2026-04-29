@@ -7,6 +7,16 @@ import { mahasiswaList } from "@/Data/Dummy";
 import MahasiswaModal from "./MahasiswaModal";
 import MahasiswaTable from "./MahasiswaTable";
 
+import {
+  confirmDelete,
+  confirmUpdate,
+} from "@/Utils/Helpers/SwalHelpers";
+
+import {
+  toastSuccess,
+  toastError,
+} from "@/Utils/Helpers/ToastHelpers";
+
 const Mahasiswa = () => {
   const [mahasiswa, setMahasiswa] = useState(mahasiswaList);
   const [selectedMahasiswa, setSelectedMahasiswa] = useState(null);
@@ -40,19 +50,33 @@ const Mahasiswa = () => {
 
   const handleSubmit = (formData) => {
     if (selectedMahasiswa) {
-      const confirmUpdate = confirm("Yakin ingin update data ini?");
-      if (!confirmUpdate) return;
-
-      updateMahasiswa(formData);
+      confirmUpdate(() => {
+        try {
+          updateMahasiswa(formData);
+          toastSuccess("Data mahasiswa berhasil diperbarui");
+        } catch {
+          toastError("Data mahasiswa gagal diperbarui");
+        }
+      });
     } else {
-      storeMahasiswa(formData);
+      try {
+        storeMahasiswa(formData);
+        toastSuccess("Data mahasiswa berhasil ditambahkan");
+      } catch {
+        toastError("Data mahasiswa gagal ditambahkan");
+      }
     }
   };
 
   const handleDelete = (nim) => {
-    if (confirm("Yakin ingin hapus data ini?")) {
-      deleteMahasiswa(nim);
-    }
+    confirmDelete(() => {
+      try {
+        deleteMahasiswa(nim);
+        toastSuccess("Data mahasiswa berhasil dihapus");
+      } catch {
+        toastError("Data mahasiswa gagal dihapus");
+      }
+    });
   };
 
   return (

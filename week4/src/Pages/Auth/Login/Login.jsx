@@ -10,6 +10,7 @@ import Heading from "@/Pages/Auth/Components/Heading";
 import Form from "@/Pages/Auth/Components/Form";
 
 import { dummyUser } from "@/Data/Dummy";
+import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,9 +30,10 @@ const Login = () => {
 
     if (email === dummyUser.email && password === dummyUser.password) {
       localStorage.setItem("user", JSON.stringify(dummyUser));
+      toastSuccess("Login berhasil!");
       navigate("/admin/dashboard");
     } else {
-      alert("Email atau password salah!");
+      toastError("Email atau password salah!");
     }
   };
 
