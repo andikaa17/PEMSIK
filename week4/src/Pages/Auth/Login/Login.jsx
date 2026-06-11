@@ -9,7 +9,7 @@ import Card from "@/Pages/Auth/Components/Card";
 import Heading from "@/Pages/Auth/Components/Heading";
 import Form from "@/Pages/Auth/Components/Form";
 
-import { dummyUser } from "@/Data/Dummy";
+import { login } from "@/Utils/Apis/AuthApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const Login = () => {
@@ -19,21 +19,26 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const { email, password } = form;
 
-    if (email === dummyUser.email && password === dummyUser.password) {
-      localStorage.setItem("user", JSON.stringify(dummyUser));
+    try {
+      const user = await login(email, password);
+      localStorage.setItem("user", JSON.stringify(user));
       toastSuccess("Login berhasil!");
       navigate("/admin/dashboard");
-    } else {
-      toastError("Email atau password salah!");
+    } catch (err) {
+      toastError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,8 +80,8 @@ const Login = () => {
           </Link>
         </div>
 
-        <Button type="submit" className="w-full">
-          Login
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? "Memproses..." : "Login"}
         </Button>
       </Form>
 

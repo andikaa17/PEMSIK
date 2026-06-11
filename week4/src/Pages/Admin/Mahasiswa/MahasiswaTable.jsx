@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import Button from "@/Pages/Admin/Components/Button";
 
 const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
-  const handleDelete = (nim) => {
-    onDelete(nim);
+  const handleDelete = (id) => {   
+    onDelete(id);
   };
 
   return (
@@ -19,7 +19,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
       <tbody>
         {mahasiswa.map((mhs, index) => (
           <tr
-            key={mhs.nim}
+            key={mhs.id}  
             className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
           >
             <td className="py-2 px-4">{mhs.nim}</td>
@@ -29,7 +29,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
             </td>
             <td className="py-2 px-4 text-center space-x-2">
               <Link
-                to={`/admin/mahasiswa/${mhs.nim}`}
+                to={`/admin/mahasiswa/${mhs.id}`}  
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded"
               >
                 Detail
@@ -46,7 +46,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
               <Button
                 size="sm"
                 variant="danger"
-                onClick={() => handleDelete(mhs.nim)}
+                onClick={() => handleDelete(mhs.id)}  
               >
                 Hapus
               </Button>

@@ -1,0 +1,22 @@
+{
+  "mahasiswa": [
+    {
+      "id": 1,
+      "nama": "Andi",
+      "nim": "A11.2020.00001"
+    },
+    {
+      "id": 2,
+      "nama": "Budi",
+      "nim": "A11.2020.00002"
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "email": "admin@mail.com",
+      "password": "admin123"
+    }
+  ]
+}
