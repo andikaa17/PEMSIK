@@ -1,50 +1,52 @@
 {
   "mahasiswa": [
     {
-      "nim": "A11.2020.00002",
-      "nama": "Budi",
-      "status": true,
-      "id": "2"
-    },
-    {
       "nim": "A11.2023.000001",
-      "nama": "Andikk",
+      "nama": "Andika",
       "status": true,
-      "id": "L5PYqqtR5qU"
+      "id": "pPLsiYW4EZs"
     },
     {
-      "nim": "1111",
-      "nama": "Andikaa",
+      "nim": "A11.2023.000002",
+      "nama": "Amik",
       "status": true,
-      "id": "V-OXkJ_GG_A"
+      "id": "aEdPr5ldllw"
     }
   ],
-  "user": [
+  "dosen": [
     {
-      "id": "1",
-      "name": "Admin 1",
-      "email": "admin@mail.com",
-      "password": "admin123",
-      "role": "admin",
-      "permission": [
-        "dashboard.page",
-        "mahasiswa.page",
-        "mahasiswa.read",
-        "mahasiswa.create",
-        "mahasiswa.update",
-        "mahasiswa.delete"
-      ]
+      "nidn": "D2023.11442",
+      "nama": "Rizki",
+      "email": "rizki@dosen.ac.id",
+      "status": true,
+      "id": "oK0CQlX1Ejg"
     },
     {
-      "id": "2",
-      "name": "Mahasiswa 1",
-      "email": "mahasiswa@mail.com",
-      "password": "mahasiswa123",
-      "role": "mahasiswa",
-      "permission": [
-        "krs.page",
-        "krs.read"
-      ]
+      "nidn": "D2023.11441",
+      "nama": "Ahik",
+      "email": "ahik@dosen.ac.id",
+      "status": false,
+      "id": "RB5Ani0KZ-A"
+    }
+  ],
+  "matakuliah": [
+    {
+      "kode": "A11.2677",
+      "nama": "Machine Learning",
+      "sks": "4",
+      "id": "K1YeT7GGFBI"
+    }
+  ],
+  "kelas": [
+    {
+      "nama": "A11.4611",
+      "tahun": "2026",
+      "id": "x1mvJ1d2phA"
+    },
+    {
+      "nama": "A11.6723",
+      "tahun": "2026",
+      "id": "kqhFpQOTPn0"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

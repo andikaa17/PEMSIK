@@ -11,7 +11,22 @@
       "mahasiswa.read",
       "mahasiswa.create",
       "mahasiswa.update",
-      "mahasiswa.delete"
+      "mahasiswa.delete",
+      "dosen.page",
+      "dosen.read",
+      "dosen.create",
+      "dosen.update",
+      "dosen.delete",
+      "matakuliah.page",
+      "matakuliah.read",
+      "matakuliah.create",
+      "matakuliah.update",
+      "matakuliah.delete",
+      "kelas.page",
+      "kelas.read",
+      "kelas.create",
+      "kelas.update",
+      "kelas.delete"
     ]
   },
   {

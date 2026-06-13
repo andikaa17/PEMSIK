@@ -7,10 +7,10 @@ import {
 } from "react-router-dom";
 
 import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "./App.css";
 
-// Import AuthProvider
 import { AuthProvider } from "@/Utils/Contexts/AuthContext";
 
 import AuthLayout from "@/Pages/Auth/AuthLayout";
@@ -21,7 +21,15 @@ import Login from "@/Pages/Auth/Login/Login";
 import Dashboard from "@/Pages/Admin/Dashboard/Dashboard";
 import Mahasiswa from "@/Pages/Admin/Mahasiswa/Mahasiswa";
 import MahasiswaDetail from "@/Pages/Admin/MahasiswaDetail/MahasiswaDetail";
+import Dosen from "@/Pages/Admin/Dosen/Dosen";
+import DosenDetail from "@/Pages/Admin/DosenDetail/DosenDetail";
+import Matakuliah from "@/Pages/Admin/Matakuliah/Matakuliah";
+import MatakuliahDetail from "@/Pages/Admin/MatakuliahDetail/MatakuliahDetail";
+import Kelas from "@/Pages/Admin/Kelas/Kelas";
+import KelasDetail from "@/Pages/Admin/KelasDetail/KelasDetail";
 import PageNotFound from "@/Pages/Error/PageNotFound";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -63,6 +71,45 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "dosen",
+        children: [
+          {
+            index: true,
+            element: <Dosen />,
+          },
+          {
+            path: ":id",
+            element: <DosenDetail />,
+          },
+        ],
+      },
+      {
+        path: "matakuliah",
+        children: [
+          {
+            index: true,
+            element: <Matakuliah />,
+          },
+          {
+            path: ":id",
+            element: <MatakuliahDetail />,
+          },
+        ],
+      },
+      {
+        path: "kelas",
+        children: [
+          {
+            index: true,
+            element: <Kelas />,
+          },
+          {
+            path: ":id",
+            element: <KelasDetail />,
+          },
+        ],
+      },
     ],
   },
   {
@@ -73,9 +120,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <Toaster position="top-right" />
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Toaster position="top-right" />
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
 );

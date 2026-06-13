@@ -2,55 +2,57 @@ import { useState } from "react";
 import Card from "@/Pages/Admin/Components/Card";
 import Heading from "@/Pages/Admin/Components/Heading";
 import Button from "@/Pages/Admin/Components/Button";
-import MahasiswaModal from "./MahasiswaModal";
-import MahasiswaTable from "./MahasiswaTable";
+import KelasTable from "./KelasTable";
+import KelasModal from "./KelasModal";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 import {
-  useMahasiswa,
-  useStoreMahasiswa,
-  useUpdateMahasiswa,
-  useDeleteMahasiswa,
-} from "@/Utils/Hooks/useMahasiswa";
+  useKelas,
+  useStoreKelas,
+  useUpdateKelas,
+  useDeleteKelas,
+} from "@/Utils/Hooks/useKelas";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
 import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
-const Mahasiswa = () => {
+const Kelas = () => {
   const { user } = useAuthStateContext();
-  const [selectedMahasiswa, setSelectedMahasiswa] = useState(null);
+  const [selectedKelas, setSelectedKelas] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: mahasiswa = [] } = useMahasiswa();
-  const { mutate: store } = useStoreMahasiswa();
-  const { mutate: update } = useUpdateMahasiswa();
-  const { mutate: remove } = useDeleteMahasiswa();
+  const { data: kelas = [] } = useKelas();
+  const { mutate: store } = useStoreKelas();
+  const { mutate: update } = useUpdateKelas();
+  const { mutate: remove } = useDeleteKelas();
 
   const resetForm = () => {
-    setSelectedMahasiswa(null);
+    setSelectedKelas(null);
     setIsModalOpen(false);
   };
 
   const openAddModal = () => {
-    setSelectedMahasiswa(null);
+    setSelectedKelas(null);
     setIsModalOpen(true);
   };
 
-  const openEditModal = (mhs) => {
-    setSelectedMahasiswa(mhs);
+  const openEditModal = (k) => {
+    setSelectedKelas(k);
     setIsModalOpen(true);
   };
 
   const handleSubmit = (formData) => {
-    const isEdit = !!selectedMahasiswa;
+    const isEdit = !!selectedKelas;
 
     if (isEdit) {
       confirmUpdate(() => {
-        update({ id: selectedMahasiswa.id, data: formData });
+        update({ id: selectedKelas.id, data: formData });
         resetForm();
       });
     } else {
-      const exists = mahasiswa.find((m) => m.nim === formData.nim);
+      const exists = kelas.find(
+        (k) => k.nama === formData.nama && k.tahun === formData.tahun,
+      );
       if (exists) {
-        toastError("NIM sudah terdaftar!");
+        toastError("Kelas sudah terdaftar!");
         return;
       }
       store(formData);
@@ -69,31 +71,30 @@ const Mahasiswa = () => {
       <Card>
         <div className="flex justify-between items-center mb-4">
           <Heading as="h2" className="mb-0 text-left">
-            Daftar Mahasiswa
+            Daftar Kelas
           </Heading>
-          {user?.permission?.includes("mahasiswa.create") && (
-            <Button onClick={openAddModal}>+ Tambah Mahasiswa</Button>
+          {user?.permission?.includes("kelas.create") && (
+            <Button onClick={openAddModal}>+ Tambah Kelas</Button>
           )}
         </div>
 
-        {user?.permission?.includes("mahasiswa.read") && (
-          <MahasiswaTable
-            mahasiswa={mahasiswa}
+        {user?.permission?.includes("kelas.read") && (
+          <KelasTable
+            kelas={kelas}
             openEditModal={openEditModal}
             onDelete={handleDelete}
           />
         )}
       </Card>
 
-      <MahasiswaModal
+      <KelasModal
         isModalOpen={isModalOpen}
         onClose={resetForm}
         onSubmit={handleSubmit}
-        selectedMahasiswa={selectedMahasiswa}
-        mahasiswa={mahasiswa}
+        selectedKelas={selectedKelas}
       />
     </>
   );
 };
 
-export default Mahasiswa;
+export default Kelas;
