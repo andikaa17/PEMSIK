@@ -10,6 +10,9 @@ import { Toaster } from "react-hot-toast";
 
 import "./App.css";
 
+// Import AuthProvider
+import { AuthProvider } from "@/Utils/Contexts/AuthContext";
+
 import AuthLayout from "@/Pages/Auth/AuthLayout";
 import AdminLayout from "@/Pages/Admin/AdminLayout";
 import ProtectedRoute from "@/Pages/Admin/Components/ProtectedRoute";
@@ -70,9 +73,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <>
+    <AuthProvider>
       <Toaster position="top-right" />
       <RouterProvider router={router} />
-    </>
+    </AuthProvider>
   </React.StrictMode>,
 );

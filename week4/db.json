@@ -1,22 +1,51 @@
 {
   "mahasiswa": [
     {
-      "id": 1,
-      "nama": "Andi",
-      "nim": "A11.2020.00001"
+      "nim": "A11.2020.00002",
+      "nama": "Budi",
+      "status": true,
+      "id": "2"
     },
     {
-      "id": 2,
-      "nama": "Budi",
-      "nim": "A11.2020.00002"
+      "nim": "A11.2023.000001",
+      "nama": "Andikk",
+      "status": true,
+      "id": "L5PYqqtR5qU"
+    },
+    {
+      "nim": "1111",
+      "nama": "Andikaa",
+      "status": true,
+      "id": "V-OXkJ_GG_A"
     }
   ],
   "user": [
     {
-      "id": 1,
-      "name": "Admin",
+      "id": "1",
+      "name": "Admin 1",
       "email": "admin@mail.com",
-      "password": "admin123"
+      "password": "admin123",
+      "role": "admin",
+      "permission": [
+        "dashboard.page",
+        "mahasiswa.page",
+        "mahasiswa.read",
+        "mahasiswa.create",
+        "mahasiswa.update",
+        "mahasiswa.delete"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Mahasiswa 1",
+      "email": "mahasiswa@mail.com",
+      "password": "mahasiswa123",
+      "role": "mahasiswa",
+      "permission": [
+        "krs.page",
+        "krs.read"
+      ]
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -1,7 +1,12 @@
 import Button from "@/Pages/Admin/Components/Button";
 import { confirmLogout } from "@/Utils/Helpers/SwalHelpers";
+import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const { user } = useAuthStateContext();
+  const navigate = useNavigate();
+
   const toggleProfileMenu = () => {
     const menu = document.getElementById("profileMenu");
     if (menu) menu.classList.toggle("hidden");
@@ -10,29 +15,57 @@ const Header = () => {
   const handleLogout = () => {
     confirmLogout(() => {
       localStorage.removeItem("user");
-      location.href = "/";
+      navigate("/");
+      window.location.reload();
     });
+  };
+
+  const getPageTitle = () => {
+    if (user?.role === "admin") return "Dashboard Admin";
+    if (user?.role === "mahasiswa") return "KRS Mahasiswa";
+    return "Sistem Akademik";
   };
 
   return (
     <header className="bg-white shadow-md">
       <div className="flex justify-between items-center px-6 py-4">
-        <h1 className="text-2xl font-semibold text-gray-800">Mahasiswa</h1>
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-800">
+            {getPageTitle()}
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Login sebagai:{" "}
+            <span className="font-semibold capitalize">{user?.role}</span>
+          </p>
+        </div>
+
         <div className="relative">
           <Button
             onClick={toggleProfileMenu}
-            className="w-8 h-8 rounded-full bg-gray-300 focus:outline-none"
-          />
+            className="w-10 h-10 rounded-full bg-indigo-600 text-white font-semibold focus:outline-none hover:bg-indigo-700 flex items-center justify-center"
+          >
+            {user?.name?.charAt(0) || "U"}
+          </Button>
+
           <div
             id="profileMenu"
-            className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-2 hidden"
+            className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden z-50"
           >
-            <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+            <div className="px-4 py-2 border-b">
+              <p className="text-sm font-semibold text-gray-800">
+                {user?.name}
+              </p>
+              <p className="text-xs text-gray-500">{user?.email}</p>
+            </div>
+            <a
+              href="#"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
               Profile
             </a>
             <button
               onClick={handleLogout}
-              className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+              className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
             >
               Logout
             </button>

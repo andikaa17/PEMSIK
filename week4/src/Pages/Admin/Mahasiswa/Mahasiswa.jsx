@@ -4,6 +4,7 @@ import Heading from "@/Pages/Admin/Components/Heading";
 import Button from "@/Pages/Admin/Components/Button";
 import MahasiswaModal from "./MahasiswaModal";
 import MahasiswaTable from "./MahasiswaTable";
+import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 
 import {
   getAllMahasiswa,
@@ -12,17 +13,12 @@ import {
   deleteMahasiswa,
 } from "@/Utils/Apis/MahasiswaApi";
 
-import {
-  confirmDelete,
-  confirmUpdate,
-} from "@/Utils/Helpers/SwalHelpers";
+import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
 
-import {
-  toastSuccess,
-  toastError,
-} from "@/Utils/Helpers/ToastHelpers";
+import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const Mahasiswa = () => {
+  const { user } = useAuthStateContext();
   const [mahasiswa, setMahasiswa] = useState([]);
   const [selectedMahasiswa, setSelectedMahasiswa] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,9 +45,9 @@ const Mahasiswa = () => {
       const dataToSend = {
         nim: newData.nim,
         nama: newData.nama,
-        status: newData.status === true || newData.status === "true"
+        status: newData.status === true || newData.status === "true",
       };
-      
+
       await storeMahasiswa(dataToSend);
       toastSuccess("Data mahasiswa berhasil ditambahkan");
       fetchMahasiswa();
@@ -66,18 +62,18 @@ const Mahasiswa = () => {
   const handleUpdateMahasiswa = async (updatedData) => {
     try {
       const idToUpdate = updatedData.id || selectedMahasiswa?.id;
-      
+
       if (!idToUpdate) {
         toastError("ID tidak ditemukan untuk update");
         return false;
       }
-      
+
       const dataToSend = {
         nim: updatedData.nim,
         nama: updatedData.nama,
-        status: updatedData.status === true || updatedData.status === "true"
+        status: updatedData.status === true || updatedData.status === "true",
       };
-      
+
       await updateMahasiswa(idToUpdate, dataToSend);
       toastSuccess("Data mahasiswa berhasil diperbarui");
       fetchMahasiswa();
@@ -114,10 +110,10 @@ const Mahasiswa = () => {
 
   const handleSubmit = async (formData) => {
     let success = false;
-    
+
     if (selectedMahasiswa) {
       const dataWithId = { ...formData, id: selectedMahasiswa.id };
-      
+
       await confirmUpdate(async () => {
         success = await handleUpdateMahasiswa(dataWithId);
         if (success) setIsModalOpen(false);
@@ -151,14 +147,18 @@ const Mahasiswa = () => {
           <Heading as="h2" className="mb-0 text-left">
             Daftar Mahasiswa
           </Heading>
-          <Button onClick={openAddModal}>+ Tambah Mahasiswa</Button>
+          {user?.permission?.includes("mahasiswa.create") && (
+            <Button onClick={openAddModal}>+ Tambah Mahasiswa</Button>
+          )}
         </div>
 
-        <MahasiswaTable
-          mahasiswa={mahasiswa}
-          openEditModal={openEditModal}
-          onDelete={handleDelete}
-        />
+        {user?.permission?.includes("mahasiswa.read") && (
+          <MahasiswaTable
+            mahasiswa={mahasiswa}
+            openEditModal={openEditModal}
+            onDelete={handleDelete}
+          />
+        )}
       </Card>
 
       <MahasiswaModal

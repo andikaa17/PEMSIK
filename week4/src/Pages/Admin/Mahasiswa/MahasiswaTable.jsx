@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import Button from "@/Pages/Admin/Components/Button";
+import { useAuthStateContext } from "@/Utils/Contexts/AuthContext"; // TAMBAHKAN
 
 const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
-  const handleDelete = (id) => {   
+  const { user } = useAuthStateContext(); // TAMBAHKAN
+
+  const handleDelete = (id) => {
     onDelete(id);
   };
 
@@ -19,7 +22,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
       <tbody>
         {mahasiswa.map((mhs, index) => (
           <tr
-            key={mhs.id}  
+            key={mhs.id}
             className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
           >
             <td className="py-2 px-4">{mhs.nim}</td>
@@ -29,27 +32,31 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
             </td>
             <td className="py-2 px-4 text-center space-x-2">
               <Link
-                to={`/admin/mahasiswa/${mhs.id}`}  
+                to={`/admin/mahasiswa/${mhs.id}`}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded"
               >
                 Detail
               </Link>
 
-              <Button
-                size="sm"
-                variant="warning"
-                onClick={() => openEditModal(mhs)}
-              >
-                Edit
-              </Button>
+              {user?.permission?.includes("mahasiswa.update") && (
+                <Button
+                  size="sm"
+                  variant="warning"
+                  onClick={() => openEditModal(mhs)}
+                >
+                  Edit
+                </Button>
+              )}
 
-              <Button
-                size="sm"
-                variant="danger"
-                onClick={() => handleDelete(mhs.id)}  
-              >
-                Hapus
-              </Button>
+              {user?.permission?.includes("mahasiswa.delete") && (
+                <Button
+                  size="sm"
+                  variant="danger"
+                  onClick={() => handleDelete(mhs.id)}
+                >
+                  Hapus
+                </Button>
+              )}
             </td>
           </tr>
         ))}
