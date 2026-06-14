@@ -1,58 +1,80 @@
-import { useParams, Link } from "react-router-dom";
-import { useDosen } from "@/Utils/Hooks/useDosen";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Card from "@/Pages/Admin/Components/Card";
 import Heading from "@/Pages/Admin/Components/Heading";
-import Button from "@/Pages/Admin/Components/Button";
+import { getDosen } from "@/Utils/Apis/DosenApi";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const DosenDetail = () => {
   const { id } = useParams();
-  const { data: dosen = [] } = useDosen();
+  const [dosen, setDosen] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Cari dengan string (tidak perlu parseInt)
-  const dosenItem = dosen.find((d) => d.id == id);
+  useEffect(() => {
+    fetchDosen();
+  }, [id]);
 
-  if (!dosenItem) {
+  const fetchDosen = async () => {
+    try {
+      const response = await getDosen(id);
+      setDosen(response.data);
+    } catch (error) {
+      toastError("Gagal mengambil data dosen");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
     return (
       <Card>
-        <div className="text-center py-8">
-          <p className="text-red-500">Data dosen tidak ditemukan</p>
-          <Link to="/admin/dosen">
-            <Button variant="primary" className="mt-4">
-              Kembali
-            </Button>
-          </Link>
-        </div>
+        <p className="text-center py-8">Memuat data dosen...</p>
+      </Card>
+    );
+  }
+
+  if (!dosen) {
+    return (
+      <Card>
+        <p className="text-red-600 text-center py-8">
+          Data dosen tidak ditemukan.
+        </p>
       </Card>
     );
   }
 
   return (
     <Card>
-      <div className="flex justify-between items-center mb-4">
-        <Heading as="h2" className="mb-0 text-left">
-          Detail Dosen
-        </Heading>
-        <Link to="/admin/dosen">
-          <Button variant="secondary">Kembali</Button>
-        </Link>
-      </div>
-
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="font-semibold text-gray-600">NIDN</label>
-            <p className="text-lg">{dosenItem.nidn}</p>
-          </div>
-          <div>
-            <label className="font-semibold text-gray-600">Nama Lengkap</label>
-            <p className="text-lg">{dosenItem.nama}</p>
-          </div>
-          <div>
-            <label className="font-semibold text-gray-600">Email</label>
-            <p className="text-lg">{dosenItem.email}</p>
-          </div>
-        </div>
-      </div>
+      <Heading as="h2" className="mb-4 text-left">
+        Detail Dosen
+      </Heading>
+      <table className="table-auto text-sm w-full">
+        <tbody>
+          <tr>
+            <td className="py-2 px-4 font-medium">NIDN</td>
+            <td className="py-2 px-4">{dosen.nidn}</td>
+          </tr>
+          <tr>
+            <td className="py-2 px-4 font-medium">Nama</td>
+            <td className="py-2 px-4">{dosen.nama}</td>
+          </tr>
+          <tr>
+            <td className="py-2 px-4 font-medium">Email</td>
+            <td className="py-2 px-4">{dosen.email || "-"}</td>
+          </tr>
+          <tr>
+            <td className="py-2 px-4 font-medium">Status</td>
+            <td className="py-2 px-4">
+              <span
+                className={`px-2 py-1 rounded text-xs ${dosen.status ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}
+              >
+                {dosen.status ? "Aktif" : "Tidak Aktif"}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </Card>
   );
 };

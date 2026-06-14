@@ -2,8 +2,24 @@ import { Link } from "react-router-dom";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 import Button from "@/Pages/Admin/Components/Button";
 
-const DosenTable = ({ dosen, openEditModal, onDelete }) => {
+const DosenTable = ({ dosen, openEditModal, onDelete, isLoading }) => {
   const { user } = useAuthStateContext();
+
+  if (isLoading) {
+    return (
+      <div className="text-center py-8">
+        <p>Memuat data dosen...</p>
+      </div>
+    );
+  }
+
+  if (dosen.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">Tidak ada data dosen</p>
+      </div>
+    );
+  }
 
   return (
     <table className="w-full text-sm text-gray-700">

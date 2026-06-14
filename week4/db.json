@@ -2,52 +2,86 @@
   "mahasiswa": [
     {
       "nim": "A11.2023.000001",
-      "nama": "Andika",
+      "nama": "Andikaa",
       "status": true,
-      "id": "pPLsiYW4EZs"
+      "id": 1
     },
     {
       "nim": "A11.2023.000002",
-      "nama": "Amik",
+      "nama": "Nazla",
       "status": true,
-      "id": "aEdPr5ldllw"
+      "id": 2
     }
   ],
   "dosen": [
     {
-      "nidn": "D2023.11442",
-      "nama": "Rizki",
-      "email": "rizki@dosen.ac.id",
-      "status": true,
-      "id": "oK0CQlX1Ejg"
-    },
-    {
       "nidn": "D2023.11441",
       "nama": "Ahik",
       "email": "ahik@dosen.ac.id",
-      "status": false,
-      "id": "RB5Ani0KZ-A"
+      "status": true,
+      "id": 1
+    },
+    {
+      "nidn": "D2023.11442",
+      "nama": "Andikaa",
+      "email": "and@dosen.ac.id",
+      "status": true,
+      "id": 2
     }
   ],
   "matakuliah": [
     {
-      "kode": "A11.2677",
+      "kode": "A11.4617",
       "nama": "Machine Learning",
-      "sks": "4",
-      "id": "K1YeT7GGFBI"
+      "sks": "3",
+      "status": true,
+      "id": 1
+    },
+    {
+      "kode": "A11.2677",
+      "nama": "Basis Data",
+      "sks": "3",
+      "status": true,
+      "id": 2
+    },
+    {
+      "kode": "A11.4610",
+      "nama": "PWL",
+      "sks": "2",
+      "status": true,
+      "id": 3
     }
   ],
   "kelas": [
     {
-      "nama": "A11.4611",
+      "kode": "KLS001",
+      "nama": "Kelas A - Machine Learning",
       "tahun": "2026",
-      "id": "x1mvJ1d2phA"
+      "semester": "Genap",
+      "matakuliah_id": 1,
+      "dosen_id": 2,
+      "ruangan": "H4.6",
+      "hari": "Selasa",
+      "jam_mulai": "09:30",
+      "jam_selesai": "12:00",
+      "kapasitas": 36,
+      "status": true,
+      "id": 1
     },
     {
-      "nama": "A11.6723",
+      "kode": "KLS002",
+      "nama": "Kelas A - Basis Data",
       "tahun": "2026",
-      "id": "kqhFpQOTPn0"
+      "semester": "Genap",
+      "matakuliah_id": 2,
+      "dosen_id": 1,
+      "ruangan": "D2.K",
+      "hari": "Selasa",
+      "jam_mulai": "08:40",
+      "jam_selesai": "10:20",
+      "kapasitas": 40,
+      "status": true,
+      "id": 2
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

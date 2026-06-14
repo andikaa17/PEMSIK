@@ -2,12 +2,28 @@ import { Link } from "react-router-dom";
 import Button from "@/Pages/Admin/Components/Button";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 
-const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
+const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, isLoading }) => {
   const { user } = useAuthStateContext();
 
   const handleDelete = (id) => {
     onDelete(id);
   };
+
+  if (isLoading) {
+    return (
+      <div className="text-center py-8">
+        <p>Memuat data mahasiswa...</p>
+      </div>
+    );
+  }
+
+  if (mahasiswa.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">Tidak ada data mahasiswa</p>
+      </div>
+    );
+  }
 
   return (
     <table className="w-full text-sm text-gray-700">

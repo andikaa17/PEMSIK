@@ -1,60 +1,80 @@
-import { useParams, Link } from "react-router-dom";
-import { useMatakuliah } from "@/Utils/Hooks/useMatakuliah";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Card from "@/Pages/Admin/Components/Card";
 import Heading from "@/Pages/Admin/Components/Heading";
-import Button from "@/Pages/Admin/Components/Button";
+import { getMatakuliah } from "@/Utils/Apis/MatakuliahApi";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const MatakuliahDetail = () => {
   const { id } = useParams();
-  const { data: matakuliah = [] } = useMatakuliah();
-  const matakuliahItem = matakuliah.find((m) => m.id == id);
+  const [matakuliah, setMatakuliah] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!matakuliahItem) {
+  useEffect(() => {
+    fetchMatakuliah();
+  }, [id]);
+
+  const fetchMatakuliah = async () => {
+    try {
+      const response = await getMatakuliah(id);
+      setMatakuliah(response.data);
+    } catch (error) {
+      toastError("Gagal mengambil data mata kuliah");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
     return (
       <Card>
-        <div className="text-center py-8">
-          <p className="text-red-500">Data mata kuliah tidak ditemukan</p>
-          <Link to="/admin/matakuliah">
-            <Button variant="primary" className="mt-4">
-              Kembali
-            </Button>
-          </Link>
-        </div>
+        <p className="text-center py-8">Memuat data mata kuliah...</p>
+      </Card>
+    );
+  }
+
+  if (!matakuliah) {
+    return (
+      <Card>
+        <p className="text-red-600 text-center py-8">
+          Data mata kuliah tidak ditemukan.
+        </p>
       </Card>
     );
   }
 
   return (
     <Card>
-      <div className="flex justify-between items-center mb-4">
-        <Heading as="h2" className="mb-0 text-left">
-          Detail Mata Kuliah
-        </Heading>
-        <Link to="/admin/matakuliah">
-          <Button variant="secondary">Kembali</Button>
-        </Link>
-      </div>
-
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="font-semibold text-gray-600">
-              Kode Mata Kuliah
-            </label>
-            <p className="text-lg">{matakuliahItem.kode}</p>
-          </div>
-          <div>
-            <label className="font-semibold text-gray-600">
-              Nama Mata Kuliah
-            </label>
-            <p className="text-lg">{matakuliahItem.nama}</p>
-          </div>
-          <div>
-            <label className="font-semibold text-gray-600">SKS</label>
-            <p className="text-lg">{matakuliahItem.sks}</p>
-          </div>
-        </div>
-      </div>
+      <Heading as="h2" className="mb-4 text-left">
+        Detail Mata Kuliah
+      </Heading>
+      <table className="table-auto text-sm w-full">
+        <tbody>
+          <tr>
+            <td className="py-2 px-4 font-medium">Kode</td>
+            <td className="py-2 px-4">{matakuliah.kode}</td>
+          </tr>
+          <tr>
+            <td className="py-2 px-4 font-medium">Nama Mata Kuliah</td>
+            <td className="py-2 px-4">{matakuliah.nama}</td>
+          </tr>
+          <tr>
+            <td className="py-2 px-4 font-medium">SKS</td>
+            <td className="py-2 px-4">{matakuliah.sks}</td>
+          </tr>
+          <tr>
+            <td className="py-2 px-4 font-medium">Status</td>
+            <td className="py-2 px-4">
+              <span
+                className={`px-2 py-1 rounded text-xs ${matakuliah.status ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}
+              >
+                {matakuliah.status ? "Aktif" : "Tidak Aktif"}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </Card>
   );
 };

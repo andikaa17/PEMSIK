@@ -7,11 +7,15 @@ import {
 } from "@/Utils/Apis/KelasApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-export const useKelas = () =>
+export const useKelas = (query = {}) =>
   useQuery({
-    queryKey: ["kelas"],
-    queryFn: getAllKelas,
-    select: (res) => res?.data ?? [],
+    queryKey: ["kelas", query],
+    queryFn: () => getAllKelas(query),
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res.headers["x-total-count"] ?? "0", 10),
+    }),
+    keepPreviousData: true,
   });
 
 export const useStoreKelas = () => {

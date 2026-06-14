@@ -7,11 +7,16 @@ import {
 } from "@/Utils/Apis/MatakuliahApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-export const useMatakuliah = () =>
+// Hook untuk get all dengan pagination
+export const useMatakuliah = (query = {}) =>
   useQuery({
-    queryKey: ["matakuliah"],
-    queryFn: getAllMatakuliah,
-    select: (res) => res?.data ?? [],
+    queryKey: ["matakuliah", query],
+    queryFn: () => getAllMatakuliah(query),
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res.headers["x-total-count"] ?? "0", 10),
+    }),
+    keepPreviousData: true,
   });
 
 export const useStoreMatakuliah = () => {

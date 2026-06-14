@@ -9,11 +9,13 @@ const MatakuliahModal = ({
   onClose,
   onSubmit,
   selectedMatakuliah,
+  matakuliah,
 }) => {
   const [form, setForm] = useState({
     kode: "",
     nama: "",
     sks: "",
+    status: true,
   });
 
   useEffect(() => {
@@ -22,19 +24,28 @@ const MatakuliahModal = ({
         kode: selectedMatakuliah.kode || "",
         nama: selectedMatakuliah.nama || "",
         sks: selectedMatakuliah.sks || "",
+        status:
+          selectedMatakuliah.status !== undefined
+            ? selectedMatakuliah.status
+            : true,
       });
     } else {
-      setForm({ kode: "", nama: "", sks: "" });
+      setForm({ kode: "", nama: "", sks: "", status: true });
     }
   }, [selectedMatakuliah, isModalOpen]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setForm({
+      ...form,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(form);
+    onClose();
   };
 
   return (
@@ -73,6 +84,19 @@ const MatakuliahModal = ({
             onChange={handleChange}
             required
           />
+        </div>
+        <div className="mb-4">
+          <Label htmlFor="status">Status</Label>
+          <div className="flex items-center gap-2 mt-2">
+            <input
+              type="checkbox"
+              name="status"
+              checked={form.status}
+              onChange={handleChange}
+              className="w-4 h-4"
+            />
+            <span>{form.status ? "Aktif" : "Tidak Aktif"}</span>
+          </div>
         </div>
         <div className="flex justify-end gap-2">
           <Button type="button" variant="secondary" onClick={onClose}>

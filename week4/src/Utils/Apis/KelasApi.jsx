@@ -1,6 +1,6 @@
 import axios from "@/Utils/AxiosInstance";
 
-export const getAllKelas = () => axios.get("/kelas");
+export const getAllKelas = (params = {}) => axios.get("/kelas", { params });
 export const getKelas = (id) => axios.get(`/kelas/${id}`);
 export const storeKelas = (data) => axios.post("/kelas", data);
 export const updateKelas = (id, data) => axios.put(`/kelas/${id}`, data);
