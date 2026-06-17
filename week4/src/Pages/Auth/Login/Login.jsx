@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
-import { login } from "@/Utils/Apis/AuthApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const Login = () => {
@@ -28,10 +27,48 @@ const Login = () => {
     const { email, password } = form;
 
     try {
-      const userData = await login(email, password);
-      setUser(userData);
-      toastSuccess("Login berhasil!");
-      navigate("/admin/dashboard");
+      if (email === "admin@mail.com" && password === "admin123") {
+        const userData = {
+          id: 1,
+          name: "Admin 1",
+          email: "admin@mail.com",
+          role: "admin",
+          permission: [
+            "dashboard.page",
+            "rencana-studi.page",
+            "rencana-studi.read",
+            "rencana-studi.create",
+            "rencana-studi.update",
+            "rencana-studi.delete",
+            "mahasiswa.page",
+            "mahasiswa.read",
+            "mahasiswa.create",
+            "mahasiswa.update",
+            "mahasiswa.delete",
+            "dosen.page",
+            "dosen.read",
+            "dosen.create",
+            "dosen.update",
+            "dosen.delete",
+            "matakuliah.page",
+            "matakuliah.read",
+            "matakuliah.create",
+            "matakuliah.update",
+            "matakuliah.delete",
+            "kelas.page",
+            "kelas.read",
+            "kelas.create",
+            "kelas.update",
+            "kelas.delete",
+          ],
+        };
+
+        setUser(userData);
+        toastSuccess("Login berhasil!");
+        navigate("/admin/dashboard");
+      } else {
+        toastError("Email atau password salah!");
+      }
     } catch (err) {
       toastError(err.message);
     } finally {

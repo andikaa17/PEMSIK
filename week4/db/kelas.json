@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "kode": "KLS001",
+    "nama": "Kelas Algoritma",
+    "tahun": "2026",
+    "semester": "Genap",
+    "matakuliah_id": 1,
+    "dosen_id": 1,
+    "mahasiswa_ids": [1, 2, 3, 4, 5],
+    "ruangan": "H4.6",
+    "hari": "Selasa",
+    "jam_mulai": "09:30",
+    "jam_selesai": "12:00",
+    "kapasitas": 36,
+    "status": true
+  }
+]

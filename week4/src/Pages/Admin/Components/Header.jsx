@@ -1,11 +1,12 @@
 import Button from "@/Pages/Admin/Components/Button";
 import { confirmLogout } from "@/Utils/Helpers/SwalHelpers";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = () => {
   const { user } = useAuthStateContext();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleProfileMenu = () => {
     const menu = document.getElementById("profileMenu");
@@ -21,6 +22,15 @@ const Header = () => {
   };
 
   const getPageTitle = () => {
+    const path = location.pathname;
+
+    if (path.includes("/admin/dashboard")) return "Dashboard";
+    if (path.includes("/admin/mahasiswa")) return "Mahasiswa";
+    if (path.includes("/admin/dosen")) return "Dosen";
+    if (path.includes("/admin/matakuliah")) return "Mata Kuliah";
+    if (path.includes("/admin/kelas")) return "Kelas";
+    if (path.includes("/admin/rencana-studi")) return "Rencana Studi";
+
     if (user?.role === "admin") return "Dashboard Admin";
     if (user?.role === "mahasiswa") return "KRS Mahasiswa";
     return "Sistem Akademik";

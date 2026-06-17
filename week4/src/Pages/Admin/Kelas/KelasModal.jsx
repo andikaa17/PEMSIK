@@ -24,6 +24,7 @@ const KelasModal = ({
     jam_mulai: "",
     jam_selesai: "",
     kapasitas: "",
+    mahasiswa_ids: [],
     status: true,
   });
 
@@ -44,6 +45,7 @@ const KelasModal = ({
         jam_mulai: selectedKelas.jam_mulai || "",
         jam_selesai: selectedKelas.jam_selesai || "",
         kapasitas: selectedKelas.kapasitas || "",
+        mahasiswa_ids: selectedKelas.mahasiswa_ids || [],
         status:
           selectedKelas.status !== undefined ? selectedKelas.status : true,
       });
@@ -60,6 +62,7 @@ const KelasModal = ({
         jam_mulai: "",
         jam_selesai: "",
         kapasitas: "",
+        mahasiswa_ids: [],
         status: true,
       });
     }
@@ -67,8 +70,6 @@ const KelasModal = ({
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    // 👇 KONVERSI KE NUMBER untuk field tertentu
     let finalValue = value;
     if (
       name === "matakuliah_id" ||
@@ -77,19 +78,19 @@ const KelasModal = ({
     ) {
       finalValue = value ? Number(value) : "";
     }
-
     setForm({ ...form, [name]: type === "checkbox" ? checked : finalValue });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
 
-    // 👇 PASTIKAN ID dikirim sebagai NUMBER
     const submitData = {
       ...form,
       matakuliah_id: form.matakuliah_id ? Number(form.matakuliah_id) : null,
       dosen_id: form.dosen_id ? Number(form.dosen_id) : null,
       kapasitas: form.kapasitas ? Number(form.kapasitas) : null,
+      mahasiswa_ids: form.mahasiswa_ids || [],
     };
 
     onSubmit(submitData);

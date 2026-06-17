@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "@/Pages/Admin/Components/Button";
-import Input from "@/Pages/Auth/Components/Input";
-import Label from "@/Pages/Auth/Components/Label";
+import Input from "@/Pages/Admin/Components/Input"; // ⭐ PERBAIKI IMPORT
+import Label from "@/Pages/Admin/Components/Label"; // ⭐ PERBAIKI IMPORT
 import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const MahasiswaModal = ({
@@ -14,20 +14,23 @@ const MahasiswaModal = ({
   const [form, setForm] = useState({
     nim: "",
     nama: "",
+    max_sks: 18, // ⭐ TAMBAHKAN
     status: true,
   });
 
   useEffect(() => {
     if (selectedMahasiswa) {
       setForm({
-        nim: selectedMahasiswa.nim,
-        nama: selectedMahasiswa.nama,
-        status: selectedMahasiswa.status,
+        nim: selectedMahasiswa.nim || "",
+        nama: selectedMahasiswa.nama || "",
+        max_sks: selectedMahasiswa.max_sks || 18, // ⭐ TAMBAHKAN
+        status: selectedMahasiswa.status !== false,
       });
     } else {
       setForm({
         nim: "",
         nama: "",
+        max_sks: 18, // ⭐ TAMBAHKAN
         status: true,
       });
     }
@@ -46,14 +49,19 @@ const MahasiswaModal = ({
     e.preventDefault();
 
     if (!form.nim.trim() || !form.nama.trim()) {
-      toastError("Data kurang terisi");
+      toastError("NIM dan Nama wajib diisi");
+      return;
+    }
+
+    if (!form.max_sks || form.max_sks < 1) {
+      toastError("Max SKS harus diisi minimal 1");
       return;
     }
 
     const exists = mahasiswa.find(
       (m) =>
         m.nim === form.nim &&
-        (!selectedMahasiswa || m.nim !== selectedMahasiswa.nim)
+        (!selectedMahasiswa || m.id !== selectedMahasiswa.id),
     );
 
     if (exists) {
@@ -62,13 +70,6 @@ const MahasiswaModal = ({
     }
 
     onSubmit(form);
-
-    setForm({
-      nim: "",
-      nama: "",
-      status: true,
-    });
-
     onClose();
   };
 
@@ -99,6 +100,7 @@ const MahasiswaModal = ({
               onChange={handleChange}
               readOnly={!!selectedMahasiswa}
               placeholder="Masukkan NIM"
+              required
             />
           </div>
 
@@ -110,6 +112,22 @@ const MahasiswaModal = ({
               value={form.nama}
               onChange={handleChange}
               placeholder="Masukkan Nama"
+              required
+            />
+          </div>
+
+          {/* ⭐ TAMBAHKAN INPUT MAX SKS */}
+          <div>
+            <Label htmlFor="max_sks">Max SKS</Label>
+            <Input
+              type="number"
+              name="max_sks"
+              value={form.max_sks}
+              onChange={handleChange}
+              placeholder="Masukkan Max SKS"
+              min="1"
+              max="24"
+              required
             />
           </div>
 

@@ -2,7 +2,15 @@ import { NavLink } from "react-router-dom";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 
 const Sidebar = () => {
-  const { user } = useAuthStateContext();
+  const { user, loading } = useAuthStateContext();
+
+  if (loading) {
+    return (
+      <aside className="bg-blue-800 text-white min-h-screen transition-all duration-300 w-20 lg:w-64">
+        <div className="p-4 text-center text-gray-300">Loading...</div>
+      </aside>
+    );
+  }
 
   return (
     <aside className="bg-blue-800 text-white min-h-screen transition-all duration-300 w-20 lg:w-64">
@@ -80,6 +88,21 @@ const Sidebar = () => {
           >
             <span>🏫</span>
             <span className="menu-text hidden lg:inline">Kelas</span>
+          </NavLink>
+        )}
+
+        
+        {user?.permission?.includes("rencana-studi.page") && (
+          <NavLink
+            to="/admin/rencana-studi"
+            className={({ isActive }) =>
+              `flex items-center space-x-2 px-4 py-2 rounded ${
+                isActive ? "bg-blue-700" : "hover:bg-blue-700"
+              }`
+            }
+          >
+            <span>📖</span>
+            <span className="menu-text hidden lg:inline">Rencana Studi</span>
           </NavLink>
         )}
       </nav>

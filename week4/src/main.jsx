@@ -28,6 +28,7 @@ import MatakuliahDetail from "@/Pages/Admin/MatakuliahDetail/MatakuliahDetail";
 import Kelas from "@/Pages/Admin/Kelas/Kelas";
 import KelasDetail from "@/Pages/Admin/KelasDetail/KelasDetail";
 import PageNotFound from "@/Pages/Error/PageNotFound";
+import RencanaStudi from "@/Pages/Admin/RencanaStudi/RencanaStudi";
 
 const queryClient = new QueryClient();
 
@@ -107,6 +108,15 @@ const router = createBrowserRouter([
           {
             path: ":id",
             element: <KelasDetail />,
+          },
+        ],
+      },
+      {
+        path: "rencana-studi",
+        children: [
+          {
+            index: true,
+            element: <RencanaStudi />,
           },
         ],
       },

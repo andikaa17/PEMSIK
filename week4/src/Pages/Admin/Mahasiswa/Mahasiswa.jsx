@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@/Pages/Admin/Components/Card";
 import Heading from "@/Pages/Admin/Components/Heading";
 import Button from "@/Pages/Admin/Components/Button";
@@ -13,18 +13,49 @@ import {
 } from "@/Utils/Hooks/useMahasiswa";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
 import { toastError } from "@/Utils/Helpers/ToastHelpers";
+// ⭐ TAMBAHKAN IMPORT INI
+import { getAllKelas } from "@/Utils/Apis/KelasApi";
+import { getAllMatakuliah } from "@/Utils/Apis/MataKuliahApi";
 
 const Mahasiswa = () => {
   const { user } = useAuthStateContext();
   const [selectedMahasiswa, setSelectedMahasiswa] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  
+  // ⭐ TAMBAHKAN STATE UNTUK KELAS & MATA KULIAH
+  const [kelas, setKelas] = useState([]);
+  const [mataKuliah, setMataKuliah] = useState([]);
+
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [sortBy, setSortBy] = useState("id");
   const [sortOrder, setSortOrder] = useState("asc");
   const [search, setSearch] = useState("");
+
+  // ⭐ TAMBAHKAN useEffect UNTUK FETCH KELAS & MATA KULIAH
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [resKelas, resMataKuliah] = await Promise.all([
+          getAllKelas(),
+          getAllMatakuliah(),
+        ]);
+        setKelas(resKelas.data || []);
+        setMataKuliah(resMataKuliah.data || []);
+      } catch (error) {
+        console.error("Error fetching kelas:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // ⭐ TAMBAHKAN FUNGSI GET TOTAL SKS
+  const getTotalSks = (mhsId) => {
+    return kelas
+      .filter((k) => k.mahasiswa_ids?.includes(mhsId))
+      .map((k) => mataKuliah.find((mk) => mk.id === k.matakuliah_id)?.sks || 0)
+      .reduce((a, b) => a + b, 0);
+  };
 
   const {
     data: result = { data: [], total: 0 },
@@ -85,7 +116,6 @@ const Mahasiswa = () => {
     });
   };
 
-  // Navigasi halaman
   const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
   const handleNext = () => setPage((prev) => Math.min(prev + 1, totalPages));
 
@@ -159,10 +189,11 @@ const Mahasiswa = () => {
             openEditModal={openEditModal}
             onDelete={handleDelete}
             isLoading={isLoadingMahasiswa}
+            // ⭐ TAMBAHKAN PROPS INI
+            getTotalSks={getTotalSks}
           />
         )}
 
-        {/* Pagination */}
         {totalPages > 0 && (
           <div className="flex justify-between items-center mt-4">
             <p className="text-sm">
