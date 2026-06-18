@@ -14,7 +14,7 @@ import {
 import { useMatakuliah } from "@/Utils/Hooks/useMatakuliah";
 import { useDosen } from "@/Utils/Hooks/useDosen";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastError } from "@/Utils/Helpers/ToastHelpers";
+import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
 
 const Kelas = () => {
   const { user } = useAuthStateContext();
@@ -45,6 +45,10 @@ const Kelas = () => {
   const matakuliah = resultMatakuliah.data;
   const dosen = resultDosen.data;
 
+  const matakuliahBelumAdaKelas = matakuliah.filter(
+    (m) => m.status !== false && !kelas.some((k) => k.matakuliah_id === m.id),
+  );
+
   const { mutate: store } = useStoreKelas();
   const { mutate: update } = useUpdateKelas();
   const { mutate: remove } = useDeleteKelas();
@@ -67,10 +71,22 @@ const Kelas = () => {
   const handleSubmit = (formData) => {
     const isEdit = !!selectedKelas;
 
+    const existingKelas = kelas.find(
+      (k) =>
+        k.id !== selectedKelas?.id &&
+        k.matakuliah_id === formData.matakuliah_id,
+    );
+
+    if (existingKelas) {
+      toastError("Mata kuliah ini sudah memiliki kelas!");
+      return;
+    }
+
     if (isEdit) {
       confirmUpdate(() => {
         update({ id: selectedKelas.id, data: formData });
         resetForm();
+        toastSuccess("Kelas berhasil diupdate!");
       });
     } else {
       const exists = kelas.find((k) => k.kode === formData.kode);
@@ -79,6 +95,7 @@ const Kelas = () => {
         return;
       }
       store(formData);
+      toastSuccess("Kelas berhasil ditambahkan");
       resetForm();
     }
   };
@@ -201,8 +218,9 @@ const Kelas = () => {
         onClose={resetForm}
         onSubmit={handleSubmit}
         selectedKelas={selectedKelas}
-        matakuliah={matakuliah}
+        matakuliah={matakuliahBelumAdaKelas}
         dosen={dosen}
+        listKelas={kelas}
       />
     </>
   );

@@ -19,10 +19,11 @@ const RencanaStudiTable = ({
   const { user } = useAuthStateContext();
 
   const getTotalSksMahasiswa = (mhsId) => {
-    return kelas
+    const total = kelas
       .filter((k) => k.mahasiswa_ids?.includes(mhsId))
       .map((k) => mataKuliah.find((m) => m.id === k.matakuliah_id)?.sks || 0)
       .reduce((a, b) => a + b, 0);
+    return Number(total);
   };
 
   const getMaxSks = (mhsId) => {
@@ -148,7 +149,9 @@ const RencanaStudiTable = ({
                         <td className="py-2 px-4 text-center font-semibold">
                           {maxSks}
                         </td>
-                        <td className="py-2 px-4 text-center">{totalSks}</td>
+                        <td className="py-2 px-4 text-center">
+                          {Number(totalSks)}
+                        </td>
                         <td className="py-2 px-4 text-center">
                           <span
                             className={`px-2 py-1 rounded text-xs font-semibold ${
@@ -159,7 +162,7 @@ const RencanaStudiTable = ({
                                   : "bg-green-200 text-green-800"
                             }`}
                           >
-                            {isOver ? "OVER" : sisaSks}
+                            {isOver ? "OVER" : Number(sisaSks)}
                           </span>
                         </td>
                         <td className="py-2 px-4 text-center">
@@ -220,7 +223,9 @@ const RencanaStudiTable = ({
                     return (
                       <option key={m.id} value={m.id} disabled={!canAdd}>
                         {m.nama} ({m.nim}){" "}
-                        {isAlreadyInClass ? "✅" : `- Sisa: ${sisaSks} SKS`}
+                        {isAlreadyInClass
+                          ? "✅"
+                          : `- Sisa: ${Number(sisaSks)} SKS`}
                       </option>
                     );
                   })}

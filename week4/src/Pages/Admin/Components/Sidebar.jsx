@@ -1,5 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
+import {
+  LayoutDashboard,
+  Users,
+  User,
+  BookOpen,
+  School,
+  ClipboardList,
+} from "lucide-react";
 
 const Sidebar = () => {
   const { user, loading } = useAuthStateContext();
@@ -30,7 +38,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <span>🏠</span>
+            <LayoutDashboard size={20} />
             <span className="menu-text hidden lg:inline">Dashboard</span>
           </NavLink>
         )}
@@ -44,7 +52,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <span>🎓</span>
+            <Users size={20} />
             <span className="menu-text hidden lg:inline">Mahasiswa</span>
           </NavLink>
         )}
@@ -58,7 +66,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <span>👨‍🏫</span>
+            <User size={20} />
             <span className="menu-text hidden lg:inline">Dosen</span>
           </NavLink>
         )}
@@ -72,7 +80,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <span>📚</span>
+            <BookOpen size={20} />
             <span className="menu-text hidden lg:inline">Mata Kuliah</span>
           </NavLink>
         )}
@@ -86,12 +94,11 @@ const Sidebar = () => {
               }`
             }
           >
-            <span>🏫</span>
+            <School size={20} />
             <span className="menu-text hidden lg:inline">Kelas</span>
           </NavLink>
         )}
 
-        
         {user?.permission?.includes("rencana-studi.page") && (
           <NavLink
             to="/admin/rencana-studi"
@@ -101,7 +108,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <span>📖</span>
+            <ClipboardList size={20} />
             <span className="menu-text hidden lg:inline">Rencana Studi</span>
           </NavLink>
         )}

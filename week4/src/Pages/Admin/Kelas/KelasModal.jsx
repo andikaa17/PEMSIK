@@ -3,6 +3,7 @@ import Modal from "@/Pages/Admin/Components/Modal";
 import Button from "@/Pages/Admin/Components/Button";
 import Input from "@/Pages/Admin/Components/Input";
 import Label from "@/Pages/Admin/Components/Label";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const KelasModal = ({
   isModalOpen,
@@ -11,6 +12,7 @@ const KelasModal = ({
   selectedKelas,
   matakuliah,
   dosen,
+  listKelas = [],
 }) => {
   const [form, setForm] = useState({
     kode: "",
@@ -85,10 +87,13 @@ const KelasModal = ({
     e.preventDefault();
     e.stopPropagation();
 
+    const matkulId = form.matakuliah_id ? Number(form.matakuliah_id) : null;
+    const dosenId = form.dosen_id ? Number(form.dosen_id) : null;
+
     const submitData = {
       ...form,
-      matakuliah_id: form.matakuliah_id ? Number(form.matakuliah_id) : null,
-      dosen_id: form.dosen_id ? Number(form.dosen_id) : null,
+      matakuliah_id: matkulId,
+      dosen_id: dosenId,
       kapasitas: form.kapasitas ? Number(form.kapasitas) : null,
       mahasiswa_ids: form.mahasiswa_ids || [],
     };

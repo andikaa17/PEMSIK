@@ -46,7 +46,7 @@
       "id": 1,
       "nim": "M001",
       "nama": "Andi",
-      "max_sks": 18,
+      "max_sks": 21,
       "status": true
     },
     {
@@ -74,7 +74,7 @@
       "id": 5,
       "nim": "M005",
       "nama": "Eko",
-      "max_sks": 24,
+      "max_sks": 20,
       "status": true
     },
     {
@@ -204,6 +204,20 @@
       "nama": "Jaringan Komputer",
       "sks": 2,
       "status": true
+    },
+    {
+      "id": 4,
+      "kode": "MK004",
+      "nama": "Bengkel Koding",
+      "sks": 2,
+      "status": true
+    },
+    {
+      "id": 5,
+      "kode": "MK005",
+      "nama": "Pembelajaran Mesin",
+      "sks": 3,
+      "status": true
     }
   ],
   "kelas": [
@@ -215,13 +229,7 @@
       "semester": "Genap",
       "matakuliah_id": 1,
       "dosen_id": 1,
-      "mahasiswa_ids": [
-        1,
-        2,
-        3,
-        4,
-        16
-      ],
+      "mahasiswa_ids": [1, 2, 3, 4, 16],
       "ruangan": "H4.6",
       "hari": "Selasa",
       "jam_mulai": "09:30",
@@ -230,6 +238,7 @@
       "status": true
     },
     {
+      "id": 2,
       "kode": "KLS002",
       "nama": "Kelas Basis Data",
       "tahun": "2026",
@@ -241,14 +250,11 @@
       "jam_mulai": "08:00",
       "jam_selesai": "10:00",
       "kapasitas": 2,
-      "mahasiswa_ids": [
-        1,
-        9
-      ],
-      "status": true,
-      "id": 2
+      "mahasiswa_ids": [1, 9],
+      "status": true
     },
     {
+      "id": 3,
       "kode": "KLS003",
       "nama": "Kelas Jarkom",
       "tahun": "2026",
@@ -260,20 +266,24 @@
       "jam_mulai": "08:40",
       "jam_selesai": "12:00",
       "kapasitas": 10,
-      "mahasiswa_ids": [
-        17,
-        12,
-        5,
-        1,
-        2,
-        3,
-        6,
-        18,
-        11,
-        7
-      ],
-      "status": true,
-      "id": 3
+      "mahasiswa_ids": [17, 12, 5, 1, 2, 3, 6, 18, 11, 7],
+      "status": true
+    },
+    {
+      "id": 4,
+      "kode": "KLS004",
+      "nama": "Bengkel Koding",
+      "tahun": "2026",
+      "semester": "Genap",
+      "matakuliah_id": 4,
+      "dosen_id": 2,
+      "ruangan": "H4.8",
+      "hari": "Selasa",
+      "jam_mulai": "12:00",
+      "jam_selesai": "16:00",
+      "kapasitas": 10,
+      "mahasiswa_ids": [19, 17],
+      "status": true
     }
   ],
   "user": [

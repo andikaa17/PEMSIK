@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@/Pages/Admin/Components/Card";
 import Heading from "@/Pages/Admin/Components/Heading";
 import Button from "@/Pages/Admin/Components/Button";
@@ -12,21 +12,39 @@ import {
   useDeleteDosen,
 } from "@/Utils/Hooks/useDosen";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastError } from "@/Utils/Helpers/ToastHelpers";
+import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
+import { getAllKelas } from "@/Utils/Apis/KelasApi";
+import { getAllMatakuliah } from "@/Utils/Apis/MataKuliahApi";
 
 const Dosen = () => {
   const { user } = useAuthStateContext();
   const [selectedDosen, setSelectedDosen] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [kelas, setKelas] = useState([]);
+  const [mataKuliah, setMataKuliah] = useState([]);
 
-  // State untuk pagination, search, sort
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [sortBy, setSortBy] = useState("id");
   const [sortOrder, setSortOrder] = useState("asc");
   const [search, setSearch] = useState("");
 
-  // Panggil hook dengan parameter
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [resKelas, resMatkul] = await Promise.all([
+          getAllKelas(),
+          getAllMatakuliah(),
+        ]);
+        setKelas(resKelas.data || []);
+        setMataKuliah(resMatkul.data || []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const { data: result = { data: [], total: 0 }, isLoading: isLoadingDosen } =
     useDosen({
       q: search,
@@ -66,6 +84,7 @@ const Dosen = () => {
       confirmUpdate(() => {
         update({ id: selectedDosen.id, data: formData });
         resetForm();
+        toastSuccess("Dosen berhasil diupdate!");
       });
     } else {
       const exists = dosen.find((d) => d.nidn === formData.nidn);
@@ -74,6 +93,7 @@ const Dosen = () => {
         return;
       }
       store(formData);
+      toastSuccess("Dosen berhasil ditambahkan");
       resetForm();
     }
   };
@@ -99,7 +119,6 @@ const Dosen = () => {
           )}
         </div>
 
-        {/* Search dan Filter */}
         <div className="flex flex-wrap gap-2 mb-4">
           <input
             type="text"
@@ -154,13 +173,14 @@ const Dosen = () => {
         {user?.permission?.includes("dosen.read") && (
           <DosenTable
             dosen={dosen}
+            kelas={kelas}
+            mataKuliah={mataKuliah}
             openEditModal={openEditModal}
             onDelete={handleDelete}
             isLoading={isLoadingDosen}
           />
         )}
 
-        {/* Pagination */}
         {totalPages > 0 && (
           <div className="flex justify-between items-center mt-4">
             <p className="text-sm">

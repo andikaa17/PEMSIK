@@ -9,6 +9,7 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
     nidn: "",
     nama: "",
     email: "",
+    max_sks: "",
     status: true,
   });
 
@@ -18,10 +19,11 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
         nidn: selectedDosen.nidn || "",
         nama: selectedDosen.nama || "",
         email: selectedDosen.email || "",
+        max_sks: selectedDosen.max_sks || "",
         status: selectedDosen.status ?? true,
       });
     } else {
-      setForm({ nidn: "", nama: "", email: "", status: true });
+      setForm({ nidn: "", nama: "", email: "", max_sks: "", status: true });
     }
   }, [selectedDosen, isModalOpen]);
 
@@ -72,6 +74,18 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
             name="email"
             value={form.email}
             onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <Label htmlFor="max_sks">Max SKS</Label>
+          <Input
+            type="number"
+            name="max_sks"
+            value={form.max_sks}
+            onChange={handleChange}
+            placeholder="Masukkan Max SKS"
+            min="1"
             required
           />
         </div>
