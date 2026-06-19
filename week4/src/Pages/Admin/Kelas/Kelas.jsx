@@ -45,9 +45,13 @@ const Kelas = () => {
   const matakuliah = resultMatakuliah.data;
   const dosen = resultDosen.data;
 
-  const matakuliahBelumAdaKelas = matakuliah.filter(
-    (m) => m.status !== false && !kelas.some((k) => k.matakuliah_id === m.id),
-  );
+  const matakuliahBelumAdaKelas = matakuliah.filter((m) => {
+    if (m.status === false) return false;
+    const usedInOtherClass = kelas.some(
+      (k) => k.matakuliah_id === m.id && k.id !== selectedKelas?.id,
+    );
+    return !usedInOtherClass;
+  });
 
   const { mutate: store } = useStoreKelas();
   const { mutate: update } = useUpdateKelas();
@@ -78,22 +82,30 @@ const Kelas = () => {
     );
 
     if (existingKelas) {
-      toastError("Mata kuliah ini sudah memiliki kelas!");
+      toastError("Mata kuliah ini sudah digunakan di kelas lain!");
+      return;
+    }
+
+    const exists = kelas.find(
+      (k) => k.id !== selectedKelas?.id && k.kode === formData.kode,
+    );
+
+    if (exists) {
+      toastError("Kode Kelas sudah terdaftar!");
       return;
     }
 
     if (isEdit) {
-      confirmUpdate(() => {
-        update({ id: selectedKelas.id, data: formData });
-        resetForm();
-        toastSuccess("Kelas berhasil diupdate!");
-      });
+      confirmUpdate(
+        `Update Kelas`,
+        `Apakah Anda yakin ingin memperbarui data kelas ${selectedKelas?.nama || ""} ini?`,
+        () => {
+          update({ id: selectedKelas.id, data: formData });
+          resetForm();
+          toastSuccess("Kelas berhasil diupdate!");
+        },
+      );
     } else {
-      const exists = kelas.find((k) => k.kode === formData.kode);
-      if (exists) {
-        toastError("Kode Kelas sudah terdaftar!");
-        return;
-      }
       store(formData);
       toastSuccess("Kelas berhasil ditambahkan");
       resetForm();
@@ -101,9 +113,15 @@ const Kelas = () => {
   };
 
   const handleDelete = (id) => {
-    confirmDelete(() => {
-      remove(id);
-    });
+    const kelasItem = kelas.find((k) => k.id === id);
+    confirmDelete(
+      `Hapus Kelas`,
+      `Apakah Anda yakin ingin menghapus ${kelasItem?.nama || "data"} ini?`,
+      () => {
+        remove(id);
+        toastSuccess(`Kelas ${kelasItem?.nama || ""} berhasil dihapus`);
+      },
+    );
   };
 
   const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));

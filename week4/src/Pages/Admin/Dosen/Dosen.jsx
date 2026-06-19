@@ -81,11 +81,15 @@ const Dosen = () => {
     const isEdit = !!selectedDosen;
 
     if (isEdit) {
-      confirmUpdate(() => {
-        update({ id: selectedDosen.id, data: formData });
-        resetForm();
-        toastSuccess("Dosen berhasil diupdate!");
-      });
+      confirmUpdate(
+        `Update Dosen`,
+        `Apakah Anda yakin ingin memperbarui data ${selectedDosen?.nama || "dosen"} ?`,
+        () => {
+          update({ id: selectedDosen.id, data: formData });
+          resetForm();
+          toastSuccess("Dosen berhasil diupdate!");
+        },
+      );
     } else {
       const exists = dosen.find((d) => d.nidn === formData.nidn);
       if (exists) {
@@ -99,9 +103,15 @@ const Dosen = () => {
   };
 
   const handleDelete = (id) => {
-    confirmDelete(() => {
-      remove(id);
-    });
+    const dosenItem = dosen.find((d) => d.id === id);
+    confirmDelete(
+      `Hapus Dosen`,
+      `Apakah Anda yakin ingin menghapus ${dosenItem?.nama || "data"}?`,
+      () => {
+        remove(id);
+        toastSuccess(`Dosen ${dosenItem?.nama || ""} berhasil dihapus`);
+      },
+    );
   };
 
   const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));

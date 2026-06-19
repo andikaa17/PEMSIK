@@ -58,6 +58,18 @@ const RencanaStudi = () => {
     fetchData();
   }, []);
 
+  const filteredKelas =
+    user?.role === "mahasiswa"
+      ? kelas.filter((k) => k.mahasiswa_ids?.includes(user.id))
+      : user?.role === "dosen"
+        ? kelas.filter((k) => {
+            const dosenItem = dosen.find(
+              (d) => d.email === user.email || d.nama === user.name,
+            );
+            return k.dosen_id === dosenItem?.id;
+          })
+        : kelas;
+
   const mataKuliahBelumAdaKelas = mataKuliah.filter(
     (m) => m.status !== false && !kelas.some((k) => k.matakuliah_id === m.id),
   );
@@ -124,8 +136,8 @@ const RencanaStudi = () => {
     const matkul = mataKuliah.find((m) => m.id === kelasItem.matakuliah_id);
 
     confirmDelete(
-      `Hapus Mahasiswa`,
-      `Apakah Anda yakin ingin menghapus ${mhs?.nama || ""} dari kelas ${matkul?.nama || ""}?`,
+      `⚠️ Hapus ${mhs?.nama || "Mahasiswa"}`,
+      `Yakin ingin mengeluarkan ${mhs?.nama || ""} dari kelas ${matkul?.nama || ""}?`,
       async () => {
         try {
           const updated = {
@@ -205,8 +217,8 @@ const RencanaStudi = () => {
     const matkul = mataKuliah.find((m) => m.id === kelasItem?.matakuliah_id);
 
     confirmDelete(
-      `Hapus Kelas`,
-      `Apakah Anda yakin ingin menghapus kelas ${matkul?.nama || ""}?`,
+      `⚠️ Hapus Kelas ${matkul?.nama || ""}`,
+      `Yakin ingin menghapus kelas ${matkul?.nama || ""} beserta semua mahasiswanya?`,
       async () => {
         try {
           await deleteKelas(kelasId);
@@ -254,7 +266,12 @@ const RencanaStudi = () => {
           <div className="flex gap-2">
             <button
               onClick={() =>
-                exportRencanaStudiPDF(kelas, mahasiswa, dosen, mataKuliah)
+                exportRencanaStudiPDF(
+                  filteredKelas,
+                  mahasiswa,
+                  dosen,
+                  mataKuliah,
+                )
               }
               className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md transition-all duration-200 flex items-center gap-2"
             >
@@ -282,7 +299,7 @@ const RencanaStudi = () => {
         </div>
 
         <RencanaStudiTable
-          kelas={kelas}
+          kelas={filteredKelas}
           mahasiswa={mahasiswa}
           dosen={dosen}
           mataKuliah={mataKuliah}

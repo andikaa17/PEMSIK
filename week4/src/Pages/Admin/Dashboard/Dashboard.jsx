@@ -21,11 +21,14 @@ import {
   TrendingUp,
   Calendar,
   Activity,
+  Filter,
+  RotateCcw,
 } from "lucide-react";
 import { getAllKelas } from "@/Utils/Apis/KelasApi";
 import { getAllMahasiswa } from "@/Utils/Apis/MahasiswaApi";
 import { getAllDosen } from "@/Utils/Apis/DosenApi";
 import { getAllMatakuliah } from "@/Utils/Apis/MataKuliahApi";
+import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 
 ChartJS.register(
   ArcElement,
@@ -41,11 +44,31 @@ ChartJS.register(
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStateContext();
   const [kelas, setKelas] = useState([]);
   const [mahasiswa, setMahasiswa] = useState([]);
   const [dosen, setDosen] = useState([]);
   const [mataKuliah, setMataKuliah] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [time, setTime] = useState(new Date());
+  const [greeting, setGreeting] = useState("");
+  const [filterSemester, setFilterSemester] = useState("all");
+  const [filterTahun, setFilterTahun] = useState("all");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const hour = time.getHours();
+    if (hour < 12) setGreeting("🌅 Selamat Pagi");
+    else if (hour < 15) setGreeting("☀️ Selamat Siang");
+    else if (hour < 19) setGreeting("🌇 Selamat Sore");
+    else setGreeting("🌙 Selamat Malam");
+  }, [time]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,6 +105,18 @@ const Dashboard = () => {
   const totalDosen = dosen.length;
   const totalMatkul = mataKuliah.length;
   const totalKelas = kelas.length;
+
+  const tahunList = [...new Set(kelas.map((k) => k.tahun).filter(Boolean))];
+  const semesterList = [
+    ...new Set(kelas.map((k) => k.semester).filter(Boolean)),
+  ];
+
+  const filteredKelas = kelas.filter((k) => {
+    const matchTahun = filterTahun === "all" || k.tahun === filterTahun;
+    const matchSemester =
+      filterSemester === "all" || k.semester === filterSemester;
+    return matchTahun && matchSemester;
+  });
 
   const stats = [
     {
@@ -132,12 +167,11 @@ const Dashboard = () => {
 
   const top5 = sortedMahasiswa.slice(0, 5);
 
-  const pieLabels = kelas.map((k) => {
+  const pieLabels = filteredKelas.map((k) => {
     const m = mataKuliah.find((mk) => mk.id === k.matakuliah_id);
     return m?.nama || "Unknown";
   });
-  const pieDataValues = kelas.map((k) => k.mahasiswa_ids?.length || 0);
-  const pieTotal = pieDataValues.reduce((a, b) => a + b, 0);
+  const pieDataValues = filteredKelas.map((k) => k.mahasiswa_ids?.length || 0);
 
   const doughnutLabels = mahasiswa.slice(0, 10).map((m) => m.nama);
   const doughnutDataValues = mahasiswa.slice(0, 10).map((m) => {
@@ -150,26 +184,91 @@ const Dashboard = () => {
     });
     return total;
   });
-  const doughnutTotal = doughnutDataValues.reduce((a, b) => a + b, 0);
+
+  const barData = dosen.map((d) => {
+    let total = 0;
+    filteredKelas.forEach((k) => {
+      if (k.dosen_id === d.id) {
+        const m = mataKuliah.find((mk) => mk.id === k.matakuliah_id);
+        total += m?.sks || 0;
+      }
+    });
+    return total;
+  });
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
           <p className="text-gray-500 text-sm">
-            Ringkasan data sistem akademik
+            {greeting}, {user?.name || "Admin"}!
           </p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-400">
-          <Calendar size={16} />
-          {new Date().toLocaleDateString("id-ID", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+        <div className="text-right">
+          <div className="text-2xl font-bold text-blue-600">
+            {time.toLocaleTimeString("id-ID")}
+          </div>
+          <div className="text-sm text-gray-400">
+            {new Date().toLocaleDateString("id-ID", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </div>
         </div>
+      </div>
+
+      <div className="flex flex-wrap gap-3 mb-4">
+        <div className="relative">
+          <Filter
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            size={16}
+          />
+          <select
+            value={filterTahun}
+            onChange={(e) => setFilterTahun(e.target.value)}
+            className="pl-9 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          >
+            <option value="all">Semua Tahun</option>
+            {tahunList.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="relative">
+          <Filter
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            size={16}
+          />
+          <select
+            value={filterSemester}
+            onChange={(e) => setFilterSemester(e.target.value)}
+            className="pl-9 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          >
+            <option value="all"> Semua Semester</option>
+            {semesterList.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          onClick={() => {
+            setFilterTahun("all");
+            setFilterSemester("all");
+          }}
+          className="flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition"
+        >
+          <RotateCcw size={16} />
+          Reset Filter
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -263,18 +362,7 @@ const Dashboard = () => {
                 datasets: [
                   {
                     label: "SKS",
-                    data: dosen.map((d) => {
-                      let total = 0;
-                      kelas.forEach((k) => {
-                        if (k.dosen_id === d.id) {
-                          const m = mataKuliah.find(
-                            (mk) => mk.id === k.matakuliah_id,
-                          );
-                          total += m?.sks || 0;
-                        }
-                      });
-                      return total;
-                    }),
+                    data: barData,
                     backgroundColor: [
                       "#FF6384",
                       "#36A2EB",

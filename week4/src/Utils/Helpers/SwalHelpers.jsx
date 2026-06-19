@@ -15,30 +15,36 @@ export const confirmLogout = (onConfirm) => {
   });
 };
 
-export const confirmDelete = (onConfirm) => {
+export const confirmDelete = (title, text, onConfirm) => {
   Swal.fire({
-    title: "Yakin ingin menghapus data ini?",
+    title: title || "Yakin ingin menghapus data ini?",
+    text: text || "",
     icon: "warning",
     showCancelButton: true,
     confirmButtonText: "Ya, hapus",
     cancelButtonText: "Batal",
   }).then((result) => {
     if (result.isConfirmed) {
-      onConfirm();
+      if (typeof onConfirm === "function") {
+        onConfirm();
+      }
     }
   });
 };
 
-export const confirmUpdate = (onConfirm) => {
+export const confirmUpdate = (title, text, onConfirm) => {
   Swal.fire({
-    title: "Yakin ingin memperbarui data ini?",
+    title: title || "Yakin ingin memperbarui data ini?",
+    text: text || "",
     icon: "question",
     showCancelButton: true,
     confirmButtonText: "Ya, perbarui",
     cancelButtonText: "Batal",
   }).then((result) => {
     if (result.isConfirmed) {
-      onConfirm();
+      if (typeof onConfirm === "function") {
+        onConfirm();
+      }
     }
   });
 };

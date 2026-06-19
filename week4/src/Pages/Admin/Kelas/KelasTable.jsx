@@ -62,66 +62,88 @@ const KelasTable = ({
           </tr>
         </thead>
         <tbody>
-          {safeKelas.map((item, index) => (
-            <tr
-              key={item.id}
-              className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-            >
-              <td className="py-2 px-3 border-b">{item.kode}</td>
-              <td className="py-2 px-3 border-b">{item.nama}</td>
-              <td className="py-2 px-3 border-b">
-                {getMatakuliahNama(item.matakuliah_id)}
-              </td>
-              <td className="py-2 px-3 border-b">
-                {getDosenNama(item.dosen_id)}
-              </td>
-              <td className="py-2 px-3 border-b">{item.ruangan || "-"}</td>
-              <td className="py-2 px-3 border-b">{item.hari || "-"}</td>
-              <td className="py-2 px-3 border-b">
-                {item.jam_mulai
-                  ? `${item.jam_mulai} - ${item.jam_selesai}`
-                  : "-"}
-              </td>
-              <td className="py-2 px-3 border-b text-center">
-                {item.kapasitas || "-"}
-              </td>
-              <td className="py-2 px-3 border-b text-center">
-                <span
-                  className={`px-2 py-1 rounded text-xs ${item.status ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}
+          {safeKelas.map((item, index) => {
+            const terisi = (item.mahasiswa_ids || []).length;
+            const kapasitas = item.kapasitas || 0;
+            const sisa = kapasitas - terisi;
+            const isFull = terisi >= kapasitas && kapasitas > 0;
+
+            let warnaKapasitas = "text-gray-700";
+            if (isFull || sisa <= 2) warnaKapasitas = "text-red-600 font-bold";
+            else if (sisa <= 5)
+              warnaKapasitas = "text-yellow-600 font-semibold";
+            else if (sisa > 5) warnaKapasitas = "text-green-600";
+
+            return (
+              <tr
+                key={item.id}
+                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+              >
+                <td className="py-2 px-3 border-b">{item.kode}</td>
+                <td className="py-2 px-3 border-b">{item.nama}</td>
+                <td className="py-2 px-3 border-b">
+                  {getMatakuliahNama(item.matakuliah_id)}
+                </td>
+                <td className="py-2 px-3 border-b">
+                  {getDosenNama(item.dosen_id)}
+                </td>
+                <td className="py-2 px-3 border-b">{item.ruangan || "-"}</td>
+                <td className="py-2 px-3 border-b">{item.hari || "-"}</td>
+                <td className="py-2 px-3 border-b">
+                  {item.jam_mulai
+                    ? `${item.jam_mulai} - ${item.jam_selesai}`
+                    : "-"}
+                </td>
+                <td
+                  className={`py-2 px-3 border-b text-center ${warnaKapasitas}`}
                 >
-                  {item.status ? "Aktif" : "Tidak Aktif"}
-                </span>
-              </td>
-              <td className="py-2 px-3 border-b text-center whitespace-nowrap">
-                <div className="flex items-center justify-center gap-1">
-                  <Link
-                    to={`/admin/kelas/${item.id}`}
-                    className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-2 py-1 rounded"
+                  {terisi}/{kapasitas || "∞"}
+                  {isFull && (
+                    <span className="ml-1 text-red-500">(PENUH!)</span>
+                  )}
+                </td>
+                <td className="py-2 px-3 border-b text-center">
+                  <span
+                    className={`px-2 py-1 rounded text-xs ${
+                      item.status
+                        ? "bg-green-200 text-green-800"
+                        : "bg-red-200 text-red-800"
+                    }`}
                   >
-                    Detail
-                  </Link>
-                  {user?.permission?.includes("kelas.update") && (
-                    <Button
-                      size="sm"
-                      variant="warning"
-                      onClick={() => openEditModal(item)}
+                    {item.status ? "Aktif" : "Tidak Aktif"}
+                  </span>
+                </td>
+                <td className="py-2 px-3 border-b text-center whitespace-nowrap">
+                  <div className="flex items-center justify-center gap-1">
+                    <Link
+                      to={`/admin/kelas/${item.id}`}
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-2 py-1 rounded"
                     >
-                      Edit
-                    </Button>
-                  )}
-                  {user?.permission?.includes("kelas.delete") && (
-                    <Button
-                      size="sm"
-                      variant="danger"
-                      onClick={() => onDelete(item.id)}
-                    >
-                      Hapus
-                    </Button>
-                  )}
-                </div>
-              </td>
-            </tr>
-          ))}
+                      Detail
+                    </Link>
+                    {user?.permission?.includes("kelas.update") && (
+                      <Button
+                        size="sm"
+                        variant="warning"
+                        onClick={() => openEditModal(item)}
+                      >
+                        Edit
+                      </Button>
+                    )}
+                    {user?.permission?.includes("kelas.delete") && (
+                      <Button
+                        size="sm"
+                        variant="danger"
+                        onClick={() => onDelete(item.id)}
+                      >
+                        Hapus
+                      </Button>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

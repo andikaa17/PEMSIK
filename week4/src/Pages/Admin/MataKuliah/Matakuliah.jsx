@@ -12,7 +12,7 @@ import {
   useDeleteMatakuliah,
 } from "@/Utils/Hooks/useMatakuliah";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastError } from "@/Utils/Helpers/ToastHelpers";
+import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
 
 const Matakuliah = () => {
   const { user } = useAuthStateContext();
@@ -63,10 +63,15 @@ const Matakuliah = () => {
     const isEdit = !!selectedMatakuliah;
 
     if (isEdit) {
-      confirmUpdate(() => {
-        update({ id: selectedMatakuliah.id, data: formData });
-        resetForm();
-      });
+      confirmUpdate(
+        `Update Mata Kuliah`,
+        `Apakah Anda yakin ingin memperbarui data ${selectedMatakuliah?.nama || "mata kuliah"}?`,
+        () => {
+          update({ id: selectedMatakuliah.id, data: formData });
+          resetForm();
+          toastSuccess("Mata Kuliah berhasil diupdate!");
+        },
+      );
     } else {
       const exists = matakuliah.find((m) => m.kode === formData.kode);
       if (exists) {
@@ -74,14 +79,21 @@ const Matakuliah = () => {
         return;
       }
       store(formData);
+      toastSuccess("Mata Kuliah berhasil ditambahkan");
       resetForm();
     }
   };
 
   const handleDelete = (id) => {
-    confirmDelete(() => {
-      remove(id);
-    });
+    const matkulItem = matakuliah.find((m) => m.id === id);
+    confirmDelete(
+      `Hapus Mata Kuliah`,
+      `Apakah Anda yakin ingin menghapus ${matkulItem?.nama || "data"}?`,
+      () => {
+        remove(id);
+        toastSuccess(`Mata Kuliah ${matkulItem?.nama || ""} berhasil dihapus`);
+      },
+    );
   };
 
   const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));

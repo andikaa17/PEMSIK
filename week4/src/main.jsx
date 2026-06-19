@@ -15,10 +15,14 @@ import { AuthProvider } from "@/Utils/Contexts/AuthContext";
 
 import AuthLayout from "@/Pages/Auth/AuthLayout";
 import AdminLayout from "@/Pages/Admin/AdminLayout";
+import MahasiswaLayout from "@/Pages/Mahasiswa/MahasiswaLayout";
+import DosenLayout from "@/Pages/Dosen/DosenLayout";
 import ProtectedRoute from "@/Pages/Admin/Components/ProtectedRoute";
 
 import Login from "@/Pages/Auth/Login/Login";
 import Dashboard from "@/Pages/Admin/Dashboard/Dashboard";
+import DashboardMahasiswa from "@/Pages/Mahasiswa/DashboardMahasiswa";
+import DashboardDosen from "@/Pages/Dosen/DashboardDosen";
 import Mahasiswa from "@/Pages/Admin/Mahasiswa/Mahasiswa";
 import MahasiswaDetail from "@/Pages/Admin/MahasiswaDetail/MahasiswaDetail";
 import Dosen from "@/Pages/Admin/Dosen/Dosen";
@@ -29,6 +33,10 @@ import Kelas from "@/Pages/Admin/Kelas/Kelas";
 import KelasDetail from "@/Pages/Admin/KelasDetail/KelasDetail";
 import PageNotFound from "@/Pages/Error/PageNotFound";
 import RencanaStudi from "@/Pages/Admin/RencanaStudi/RencanaStudi";
+import RencanaStudiDosen from "@/Pages/Dosen/RencanaStudi/RencanaStudiDosen";
+import JadwalDosen from "@/Pages/Dosen/JadwalMengajar/JadwalDosen";
+import KRS from "@/Pages/Mahasiswa/KRS/KRS";
+import Jadwal from "@/Pages/Mahasiswa/Jadwal/Jadwal";
 
 const queryClient = new QueryClient();
 
@@ -119,6 +127,62 @@ const router = createBrowserRouter([
             element: <RencanaStudi />,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: "/mahasiswa",
+    element: (
+      <ProtectedRoute>
+        <MahasiswaLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="dashboard" />,
+      },
+      {
+        path: "dashboard",
+        element: <DashboardMahasiswa />,
+      },
+      {
+        path: "krs",
+        element: <KRS />,
+      },
+      {
+        path: "jadwal",
+        element: <Jadwal />,
+      },
+      {
+        path: "rencana-studi",
+        element: <RencanaStudi />,
+      },
+    ],
+  },
+  {
+    path: "/dosen",
+    element: (
+      <ProtectedRoute>
+        <DosenLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="dashboard" />,
+      },
+      {
+        path: "dashboard",
+        element: <DashboardDosen />,
+      },
+      {
+        path: "rencana-studi",
+        element: <RencanaStudiDosen />,
+      },
+      {
+        path: "jadwal",
+        element: <JadwalDosen />,
       },
     ],
   },

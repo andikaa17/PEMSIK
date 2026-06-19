@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
+import { login } from "@/Utils/Apis/AuthApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const Login = () => {
@@ -18,56 +19,36 @@ const Login = () => {
   };
 
   if (user) {
-    return <Navigate to="/admin/dashboard" replace />;
+    if (user.role === "admin") {
+      return <Navigate to="/admin/dashboard" replace />;
+    }
+    if (user.role === "mahasiswa") {
+      return <Navigate to="/mahasiswa/dashboard" replace />;
+    }
+    if (user.role === "dosen") {
+      return <Navigate to="/dosen/dashboard" replace />;
+    }
+    return <Navigate to="/" replace />;
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const { email, password } = form;
 
     try {
-      if (email === "admin@mail.com" && password === "admin123") {
-        const userData = {
-          id: 1,
-          name: "Admin 1",
-          email: "admin@mail.com",
-          role: "admin",
-          permission: [
-            "dashboard.page",
-            "rencana-studi.page",
-            "rencana-studi.read",
-            "rencana-studi.create",
-            "rencana-studi.update",
-            "rencana-studi.delete",
-            "mahasiswa.page",
-            "mahasiswa.read",
-            "mahasiswa.create",
-            "mahasiswa.update",
-            "mahasiswa.delete",
-            "dosen.page",
-            "dosen.read",
-            "dosen.create",
-            "dosen.update",
-            "dosen.delete",
-            "matakuliah.page",
-            "matakuliah.read",
-            "matakuliah.create",
-            "matakuliah.update",
-            "matakuliah.delete",
-            "kelas.page",
-            "kelas.read",
-            "kelas.create",
-            "kelas.update",
-            "kelas.delete",
-          ],
-        };
+      const userData = await login(email, password);
 
-        setUser(userData);
-        toastSuccess("Login berhasil!");
+      setUser(userData);
+      toastSuccess("Login berhasil!");
+
+      if (userData.role === "admin") {
         navigate("/admin/dashboard");
-      } else {
-        toastError("Email atau password salah!");
+      } else if (userData.role === "mahasiswa") {
+        navigate("/mahasiswa/dashboard");
+      } else if (userData.role === "dosen") {
+        navigate("/dosen/dashboard");
       }
     } catch (err) {
       toastError(err.message);
@@ -90,6 +71,7 @@ const Login = () => {
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Masukkan email"
+              autoComplete="email"
               required
             />
           </div>
@@ -102,6 +84,7 @@ const Login = () => {
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Masukkan password"
+              autoComplete="current-password"
               required
             />
           </div>
@@ -113,9 +96,11 @@ const Login = () => {
             {loading ? "Memproses..." : "Login"}
           </button>
         </form>
-        <p className="text-sm text-center text-gray-600 mt-4">
-          Demo: admin@mail.com | admin123
-        </p>
+        <div className="text-sm text-center text-gray-600 mt-4">
+          <p>Admin: admin@mail.com | admin123</p>
+          <p>Mahasiswa: andi@mahasiswa.ac.id | andi123</p>
+          <p>Dosen: slamet@dosen.ac.id | slamet123</p>
+        </div>
       </div>
     </div>
   );

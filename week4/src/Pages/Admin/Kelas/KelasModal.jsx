@@ -90,6 +90,20 @@ const KelasModal = ({
     const matkulId = form.matakuliah_id ? Number(form.matakuliah_id) : null;
     const dosenId = form.dosen_id ? Number(form.dosen_id) : null;
 
+    const existingKelas = listKelas.find(
+      (k) => k.id !== selectedKelas?.id && k.matakuliah_id === matkulId,
+    );
+
+    if (existingKelas) {
+      const dosenExisting = listDosen.find(
+        (d) => d.id === existingKelas.dosen_id,
+      );
+      toastError(
+        `Mata kuliah ini sudah diampu oleh ${dosenExisting?.nama || "dosen lain"}!`,
+      );
+      return;
+    }
+
     const submitData = {
       ...form,
       matakuliah_id: matkulId,

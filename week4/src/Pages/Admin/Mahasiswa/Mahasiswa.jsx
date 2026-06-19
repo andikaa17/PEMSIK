@@ -12,8 +12,7 @@ import {
   useDeleteMahasiswa,
 } from "@/Utils/Hooks/useMahasiswa";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastError } from "@/Utils/Helpers/ToastHelpers";
-// ⭐ TAMBAHKAN IMPORT INI
+import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
 import { getAllKelas } from "@/Utils/Apis/KelasApi";
 import { getAllMatakuliah } from "@/Utils/Apis/MataKuliahApi";
 
@@ -21,8 +20,6 @@ const Mahasiswa = () => {
   const { user } = useAuthStateContext();
   const [selectedMahasiswa, setSelectedMahasiswa] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // ⭐ TAMBAHKAN STATE UNTUK KELAS & MATA KULIAH
   const [kelas, setKelas] = useState([]);
   const [mataKuliah, setMataKuliah] = useState([]);
 
@@ -32,7 +29,6 @@ const Mahasiswa = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [search, setSearch] = useState("");
 
-  // ⭐ TAMBAHKAN useEffect UNTUK FETCH KELAS & MATA KULIAH
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,7 +45,6 @@ const Mahasiswa = () => {
     fetchData();
   }, []);
 
-  // ⭐ TAMBAHKAN FUNGSI GET TOTAL SKS
   const getTotalSks = (mhsId) => {
     return kelas
       .filter((k) => k.mahasiswa_ids?.includes(mhsId))
@@ -95,10 +90,15 @@ const Mahasiswa = () => {
     const isEdit = !!selectedMahasiswa;
 
     if (isEdit) {
-      confirmUpdate(() => {
-        update({ id: selectedMahasiswa.id, data: formData });
-        resetForm();
-      });
+      confirmUpdate(
+        `Update Mahasiswa`,
+        `Apakah Anda yakin ingin memperbarui data ${selectedMahasiswa?.nama || "mahasiswa"}?`,
+        () => {
+          update({ id: selectedMahasiswa.id, data: formData });
+          resetForm();
+          toastSuccess("Mahasiswa berhasil diupdate!");
+        },
+      );
     } else {
       const exists = mahasiswa.find((m) => m.nim === formData.nim);
       if (exists) {
@@ -106,14 +106,21 @@ const Mahasiswa = () => {
         return;
       }
       store(formData);
+      toastSuccess("Mahasiswa berhasil ditambahkan");
       resetForm();
     }
   };
 
   const handleDelete = (id) => {
-    confirmDelete(() => {
-      remove(id);
-    });
+    const mahasiswaItem = mahasiswa.find((m) => m.id === id);
+    confirmDelete(
+      `Hapus Mahasiswa`,
+      `Apakah Anda yakin ingin menghapus ${mahasiswaItem?.nama || "data"} ?`,
+      () => {
+        remove(id);
+        toastSuccess(`Mahasiswa ${mahasiswaItem?.nama || ""} berhasil dihapus`);
+      },
+    );
   };
 
   const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
@@ -131,7 +138,6 @@ const Mahasiswa = () => {
           )}
         </div>
 
-        {/* Search dan Filter */}
         <div className="flex flex-wrap gap-2 mb-4">
           <input
             type="text"
@@ -189,7 +195,6 @@ const Mahasiswa = () => {
             openEditModal={openEditModal}
             onDelete={handleDelete}
             isLoading={isLoadingMahasiswa}
-            // ⭐ TAMBAHKAN PROPS INI
             getTotalSks={getTotalSks}
           />
         )}

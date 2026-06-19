@@ -7,6 +7,8 @@ import {
   BookOpen,
   School,
   ClipboardList,
+  FileText,
+  Calendar,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -20,18 +22,35 @@ const Sidebar = () => {
     );
   }
 
+  const isAdmin = user?.role === "admin";
+  const isDosen = user?.role === "dosen";
+  const isMahasiswa = user?.role === "mahasiswa";
+
   return (
     <aside className="bg-blue-800 text-white min-h-screen transition-all duration-300 w-20 lg:w-64">
       <div className="p-4 border-b border-blue-700">
-        <span className="text-2xl font-bold hidden lg:block">Admin Panel</span>
+        <span className="text-2xl font-bold hidden lg:block">
+          {isAdmin && "Admin Panel"}
+          {isDosen && "Dosen Panel"}
+          {isMahasiswa && "Mahasiswa Panel"}
+        </span>
         <span className="text-2xl font-bold lg:hidden block text-center">
-          A
+          {isAdmin && "A"}
+          {isDosen && "D"}
+          {isMahasiswa && "M"}
         </span>
       </div>
       <nav className="p-4 space-y-2">
-        {user?.permission?.includes("dashboard.page") && (
+        {/* DASHBOARD - SEMUA ROLE */}
+        {(isAdmin || isDosen || isMahasiswa) && (
           <NavLink
-            to="/admin/dashboard"
+            to={
+              isAdmin
+                ? "/admin/dashboard"
+                : isDosen
+                  ? "/dosen/dashboard"
+                  : "/mahasiswa/dashboard"
+            }
             className={({ isActive }) =>
               `flex items-center space-x-2 px-4 py-2 rounded ${
                 isActive ? "bg-blue-700" : "hover:bg-blue-700"
@@ -43,7 +62,8 @@ const Sidebar = () => {
           </NavLink>
         )}
 
-        {user?.permission?.includes("mahasiswa.page") && (
+        {/* MAHASISWA - HANYA ADMIN */}
+        {isAdmin && user?.permission?.includes("mahasiswa.page") && (
           <NavLink
             to="/admin/mahasiswa"
             className={({ isActive }) =>
@@ -57,7 +77,8 @@ const Sidebar = () => {
           </NavLink>
         )}
 
-        {user?.permission?.includes("dosen.page") && (
+        {/* DOSEN - HANYA ADMIN */}
+        {isAdmin && user?.permission?.includes("dosen.page") && (
           <NavLink
             to="/admin/dosen"
             className={({ isActive }) =>
@@ -71,7 +92,8 @@ const Sidebar = () => {
           </NavLink>
         )}
 
-        {user?.permission?.includes("matakuliah.page") && (
+        {/* MATA KULIAH - HANYA ADMIN */}
+        {isAdmin && user?.permission?.includes("matakuliah.page") && (
           <NavLink
             to="/admin/matakuliah"
             className={({ isActive }) =>
@@ -85,7 +107,8 @@ const Sidebar = () => {
           </NavLink>
         )}
 
-        {user?.permission?.includes("kelas.page") && (
+        {/* KELAS - HANYA ADMIN */}
+        {isAdmin && user?.permission?.includes("kelas.page") && (
           <NavLink
             to="/admin/kelas"
             className={({ isActive }) =>
@@ -99,17 +122,49 @@ const Sidebar = () => {
           </NavLink>
         )}
 
-        {user?.permission?.includes("rencana-studi.page") && (
+        {/* RENCANA STUDI - ADMIN & DOSEN */}
+        {(isAdmin || isDosen) &&
+          user?.permission?.includes("rencana-studi.page") && (
+            <NavLink
+              to={isAdmin ? "/admin/rencana-studi" : "/dosen/rencana-studi"}
+              className={({ isActive }) =>
+                `flex items-center space-x-2 px-4 py-2 rounded ${
+                  isActive ? "bg-blue-700" : "hover:bg-blue-700"
+                }`
+              }
+            >
+              <ClipboardList size={20} />
+              <span className="menu-text hidden lg:inline">Rencana Studi</span>
+            </NavLink>
+          )}
+
+        {/* JADWAL - DOSEN & MAHASISWA */}
+        {(isDosen || isMahasiswa) && (
           <NavLink
-            to="/admin/rencana-studi"
+            to={isDosen ? "/dosen/jadwal" : "/mahasiswa/jadwal"}
             className={({ isActive }) =>
               `flex items-center space-x-2 px-4 py-2 rounded ${
                 isActive ? "bg-blue-700" : "hover:bg-blue-700"
               }`
             }
           >
-            <ClipboardList size={20} />
-            <span className="menu-text hidden lg:inline">Rencana Studi</span>
+            <Calendar size={20} />
+            <span className="menu-text hidden lg:inline">Jadwal</span>
+          </NavLink>
+        )}
+
+        {/* KRS - HANYA MAHASISWA */}
+        {isMahasiswa && (
+          <NavLink
+            to="/mahasiswa/krs"
+            className={({ isActive }) =>
+              `flex items-center space-x-2 px-4 py-2 rounded ${
+                isActive ? "bg-blue-700" : "hover:bg-blue-700"
+              }`
+            }
+          >
+            <FileText size={20} />
+            <span className="menu-text hidden lg:inline">KRS</span>
           </NavLink>
         )}
       </nav>

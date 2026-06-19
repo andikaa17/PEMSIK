@@ -5,40 +5,50 @@
       "nidn": "D001",
       "nama": "Slamet",
       "email": "slamet@dosen.ac.id",
+      "password": "slamet123",
       "max_sks": 12,
-      "status": true
+      "status": true,
+      "role": "dosen"
     },
     {
       "id": 2,
       "nidn": "D002",
       "nama": "Tini",
       "email": "tini@dosen.ac.id",
+      "password": "tini123",
       "max_sks": 10,
-      "status": true
+      "status": true,
+      "role": "dosen"
     },
     {
       "id": 3,
       "nidn": "D003",
       "nama": "Udin",
       "email": "udin@dosen.ac.id",
+      "password": "udin123",
       "max_sks": 14,
-      "status": true
+      "status": true,
+      "role": "dosen"
     },
     {
       "id": 4,
       "nidn": "D004",
       "nama": "Vina",
       "email": "vina@dosen.ac.id",
+      "password": "vina123",
       "max_sks": 16,
-      "status": true
+      "status": true,
+      "role": "dosen"
     },
     {
       "id": 5,
       "nidn": "D005",
       "nama": "Wawan",
       "email": "wawan@dosen.ac.id",
+      "password": "wawan123",
       "max_sks": 8,
-      "status": true
+      "status": true,
+      "role": "dosen"
     }
   ],
   "mahasiswa": [
@@ -46,141 +56,198 @@
       "id": 1,
       "nim": "M001",
       "nama": "Andi",
+      "email": "andi@mahasiswa.ac.id",
+      "password": "andi123",
       "max_sks": 21,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 2,
       "nim": "M002",
       "nama": "Budi",
+      "email": "budi@mahasiswa.ac.id",
+      "password": "budi123",
       "max_sks": 20,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 3,
       "nim": "M003",
       "nama": "Citra",
+      "email": "citra@mahasiswa.ac.id",
+      "password": "citra123",
       "max_sks": 22,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
-      "id": 4,
       "nim": "M004",
       "nama": "Dina",
-      "max_sks": 18,
-      "status": true
+      "max_sks": "24",
+      "status": true,
+      "id": 4
     },
     {
       "id": 5,
       "nim": "M005",
       "nama": "Eko",
+      "email": "eko@mahasiswa.ac.id",
+      "password": "eko123",
       "max_sks": 20,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 6,
       "nim": "M006",
       "nama": "Fajar",
+      "email": "fajar@mahasiswa.ac.id",
+      "password": "fajar123",
       "max_sks": 21,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 7,
       "nim": "M007",
       "nama": "Gita",
+      "email": "gita@mahasiswa.ac.id",
+      "password": "gita123",
       "max_sks": 20,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 8,
       "nim": "M008",
       "nama": "Hani",
+      "email": "hani@mahasiswa.ac.id",
+      "password": "hani123",
       "max_sks": 18,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 9,
       "nim": "M009",
       "nama": "Iwan",
+      "email": "iwan@mahasiswa.ac.id",
+      "password": "iwan123",
       "max_sks": 20,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 10,
       "nim": "M010",
       "nama": "Joko",
+      "email": "joko@mahasiswa.ac.id",
+      "password": "joko123",
       "max_sks": 18,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 11,
       "nim": "M011",
       "nama": "Kiki",
+      "email": "kiki@mahasiswa.ac.id",
+      "password": "kiki123",
       "max_sks": 24,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 12,
       "nim": "M012",
       "nama": "Lia",
+      "email": "lia@mahasiswa.ac.id",
+      "password": "lia123",
       "max_sks": 20,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 13,
       "nim": "M013",
       "nama": "Maya",
+      "email": "maya@mahasiswa.ac.id",
+      "password": "maya123",
       "max_sks": 18,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 14,
       "nim": "M014",
       "nama": "Nina",
+      "email": "nina@mahasiswa.ac.id",
+      "password": "nina123",
       "max_sks": 22,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 15,
       "nim": "M015",
       "nama": "Oki",
+      "email": "oki@mahasiswa.ac.id",
+      "password": "oki123",
       "max_sks": 20,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 16,
       "nim": "M016",
       "nama": "Putri",
+      "email": "putri@mahasiswa.ac.id",
+      "password": "putri123",
       "max_sks": 18,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 17,
       "nim": "M017",
       "nama": "Qila",
+      "email": "qila@mahasiswa.ac.id",
+      "password": "qila123",
       "max_sks": 18,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 18,
       "nim": "M018",
       "nama": "Rudi",
+      "email": "rudi@mahasiswa.ac.id",
+      "password": "rudi123",
       "max_sks": 21,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 19,
       "nim": "M019",
       "nama": "Salsa",
+      "email": "salsa@mahasiswa.ac.id",
+      "password": "salsa123",
       "max_sks": 18,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     },
     {
       "id": 20,
       "nim": "M020",
       "nama": "Tino",
+      "email": "tino@mahasiswa.ac.id",
+      "password": "tino123",
       "max_sks": 18,
-      "status": true
+      "status": true,
+      "role": "mahasiswa"
     }
   ],
   "matakuliah": [
@@ -222,23 +289,29 @@
   ],
   "kelas": [
     {
-      "id": 1,
       "kode": "KLS001",
       "nama": "Kelas Algoritma",
       "tahun": "2026",
       "semester": "Genap",
       "matakuliah_id": 1,
       "dosen_id": 1,
-      "mahasiswa_ids": [1, 2, 3, 4, 16],
       "ruangan": "H4.6",
-      "hari": "Selasa",
+      "hari": "Senin",
       "jam_mulai": "09:30",
       "jam_selesai": "12:00",
       "kapasitas": 36,
-      "status": true
+      "mahasiswa_ids": [
+        1,
+        2,
+        3,
+        4,
+        16,
+        7
+      ],
+      "status": true,
+      "id": 1
     },
     {
-      "id": 2,
       "kode": "KLS002",
       "nama": "Kelas Basis Data",
       "tahun": "2026",
@@ -249,12 +322,15 @@
       "hari": "Senin",
       "jam_mulai": "08:00",
       "jam_selesai": "10:00",
-      "kapasitas": 2,
-      "mahasiswa_ids": [1, 9],
-      "status": true
+      "kapasitas": 10,
+      "mahasiswa_ids": [
+        1,
+        9
+      ],
+      "status": true,
+      "id": 2
     },
     {
-      "id": 3,
       "kode": "KLS003",
       "nama": "Kelas Jarkom",
       "tahun": "2026",
@@ -262,12 +338,24 @@
       "matakuliah_id": 3,
       "dosen_id": 2,
       "ruangan": "DK2.1",
-      "hari": "Selasa",
+      "hari": "Rabu",
       "jam_mulai": "08:40",
       "jam_selesai": "12:00",
-      "kapasitas": 10,
-      "mahasiswa_ids": [17, 12, 5, 1, 2, 3, 6, 18, 11, 7],
-      "status": true
+      "kapasitas": 12,
+      "mahasiswa_ids": [
+        17,
+        12,
+        5,
+        1,
+        2,
+        3,
+        6,
+        18,
+        11,
+        7
+      ],
+      "status": true,
+      "id": 3
     },
     {
       "id": 4,
@@ -282,8 +370,32 @@
       "jam_mulai": "12:00",
       "jam_selesai": "16:00",
       "kapasitas": 10,
-      "mahasiswa_ids": [19, 17],
+      "mahasiswa_ids": [
+        19,
+        17,
+        7
+      ],
       "status": true
+    },
+    {
+      "kode": "GL001",
+      "nama": "Pembelajaran Mesin",
+      "tahun": "2026",
+      "semester": "Ganjil",
+      "matakuliah_id": 5,
+      "dosen_id": 5,
+      "ruangan": "H4.10",
+      "hari": "Selasa",
+      "jam_mulai": "12:00",
+      "jam_selesai": "15:00",
+      "kapasitas": 37,
+      "mahasiswa_ids": [
+        20,
+        1,
+        18
+      ],
+      "status": true,
+      "id": 5
     }
   ],
   "user": [
@@ -320,6 +432,281 @@
         "rencana-studi.create",
         "rencana-studi.update",
         "rencana-studi.delete"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Slamet",
+      "email": "slamet@dosen.ac.id",
+      "password": "slamet123",
+      "role": "dosen",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Tini",
+      "email": "tini@dosen.ac.id",
+      "password": "tini123",
+      "role": "dosen",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Udin",
+      "email": "udin@dosen.ac.id",
+      "password": "udin123",
+      "role": "dosen",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Vina",
+      "email": "vina@dosen.ac.id",
+      "password": "vina123",
+      "role": "dosen",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Wawan",
+      "email": "wawan@dosen.ac.id",
+      "password": "wawan123",
+      "role": "dosen",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Andi",
+      "email": "andi@mahasiswa.ac.id",
+      "password": "andi123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Budi",
+      "email": "budi@mahasiswa.ac.id",
+      "password": "budi123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Citra",
+      "email": "citra@mahasiswa.ac.id",
+      "password": "citra123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Dina",
+      "email": "dina@mahasiswa.ac.id",
+      "password": "dina123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Eko",
+      "email": "eko@mahasiswa.ac.id",
+      "password": "eko123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Fajar",
+      "email": "fajar@mahasiswa.ac.id",
+      "password": "fajar123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Gita",
+      "email": "gita@mahasiswa.ac.id",
+      "password": "gita123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Hani",
+      "email": "hani@mahasiswa.ac.id",
+      "password": "hani123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Iwan",
+      "email": "iwan@mahasiswa.ac.id",
+      "password": "iwan123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Joko",
+      "email": "joko@mahasiswa.ac.id",
+      "password": "joko123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Kiki",
+      "email": "kiki@mahasiswa.ac.id",
+      "password": "kiki123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Lia",
+      "email": "lia@mahasiswa.ac.id",
+      "password": "lia123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Maya",
+      "email": "maya@mahasiswa.ac.id",
+      "password": "maya123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Nina",
+      "email": "nina@mahasiswa.ac.id",
+      "password": "nina123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 21,
+      "name": "Oki",
+      "email": "oki@mahasiswa.ac.id",
+      "password": "oki123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Putri",
+      "email": "putri@mahasiswa.ac.id",
+      "password": "putri123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 23,
+      "name": "Qila",
+      "email": "qila@mahasiswa.ac.id",
+      "password": "qila123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Rudi",
+      "email": "rudi@mahasiswa.ac.id",
+      "password": "rudi123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 25,
+      "name": "Salsa",
+      "email": "salsa@mahasiswa.ac.id",
+      "password": "salsa123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
+    },
+    {
+      "id": 26,
+      "name": "Tino",
+      "email": "tino@mahasiswa.ac.id",
+      "password": "tino123",
+      "role": "mahasiswa",
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
       ]
     }
   ]
