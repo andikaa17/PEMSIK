@@ -28,7 +28,7 @@ import {
 import { getAllKelas } from "@/Utils/Apis/KelasApi";
 import { getAllMahasiswa } from "@/Utils/Apis/MahasiswaApi";
 import { getAllDosen } from "@/Utils/Apis/DosenApi";
-import { getAllMatakuliah } from "@/Utils/Apis/MataKuliahApi";
+import { getAllMatakuliah } from "@/Utils/Apis/MatakuliahApi";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 
 ChartJS.register(

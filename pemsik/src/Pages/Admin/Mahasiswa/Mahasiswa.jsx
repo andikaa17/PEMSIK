@@ -14,7 +14,7 @@ import {
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
 import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
 import { getAllKelas } from "@/Utils/Apis/KelasApi";
-import { getAllMatakuliah } from "@/Utils/Apis/MataKuliahApi";
+import { getAllMatakuliah } from "@/Utils/Apis/MatakuliahApi";
 
 const Mahasiswa = () => {
   const { user } = useAuthStateContext();

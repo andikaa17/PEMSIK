@@ -4,7 +4,7 @@ import {
   storeMatakuliah,
   updateMatakuliah,
   deleteMatakuliah,
-} from "@/Utils/Apis/MataKuliahApi";
+} from "@/Utils/Apis/MatakuliahApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
 // Hook untuk get all dengan pagination (dilakukan di client side)

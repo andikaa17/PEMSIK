@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 import { getAllKelas } from "@/Utils/Apis/KelasApi";
-import { getAllMatakuliah } from "@/Utils/Apis/MataKuliahApi";
+import { getAllMatakuliah } from "@/Utils/Apis/MatakuliahApi";
 import { getAllMahasiswa } from "@/Utils/Apis/MahasiswaApi";
 import { getAllDosen } from "@/Utils/Apis/DosenApi";
 import Card from "@/Pages/Admin/Components/Card";

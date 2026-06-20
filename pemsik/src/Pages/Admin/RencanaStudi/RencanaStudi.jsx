@@ -8,7 +8,7 @@ import {
 } from "@/Utils/Apis/KelasApi";
 import { getAllDosen } from "@/Utils/Apis/DosenApi";
 import { getAllMahasiswa } from "@/Utils/Apis/MahasiswaApi";
-import { getAllMatakuliah } from "@/Utils/Apis/MataKuliahApi";
+import { getAllMatakuliah } from "@/Utils/Apis/MatakuliahApi";
 
 import Card from "@/Pages/Admin/Components/Card";
 import Heading from "@/Pages/Admin/Components/Heading";
