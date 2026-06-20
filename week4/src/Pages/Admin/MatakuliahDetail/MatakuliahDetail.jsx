@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Card from "@/Pages/Admin/Components/Card";
 import Heading from "@/Pages/Admin/Components/Heading";
-import { getMatakuliah } from "@/Utils/Apis/MatakuliahApi";
+import { getMatakuliah } from "@/Utils/Apis/MataKuliahApi";
 import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const MatakuliahDetail = () => {
