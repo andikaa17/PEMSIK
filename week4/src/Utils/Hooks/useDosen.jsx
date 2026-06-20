@@ -7,14 +7,13 @@ import {
 } from "@/Utils/Apis/DosenApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-// Hook untuk get all dengan pagination
 export const useDosen = (query = {}) =>
   useQuery({
     queryKey: ["dosen", query],
     queryFn: () => getAllDosen(query),
-    select: (res) => ({
-      data: res?.data ?? [],
-      total: parseInt(res.headers["x-total-count"] ?? "0", 10),
+    select: (data) => ({
+      data: data ?? [],
+      total: data?.length ?? 0,
     }),
     keepPreviousData: true,
   });
