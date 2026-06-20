@@ -11,7 +11,6 @@ import {
   Title,
   PointElement,
   LineElement,
-  Filler,
 } from "chart.js";
 import { Pie, Bar, Doughnut, Line } from "react-chartjs-2";
 import {
@@ -41,7 +40,6 @@ ChartJS.register(
   Title,
   PointElement,
   LineElement,
-  Filler,
 );
 
 const Dashboard = () => {

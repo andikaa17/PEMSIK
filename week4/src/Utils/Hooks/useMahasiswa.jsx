@@ -7,13 +7,14 @@ import {
 } from "@/Utils/Apis/MahasiswaApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
+// Hook untuk get all dengan pagination
 export const useMahasiswa = (query = {}) =>
   useQuery({
     queryKey: ["mahasiswa", query],
     queryFn: () => getAllMahasiswa(query),
-    select: (data) => ({
-      data: data ?? [], // ← data = array langsung
-      total: data?.length ?? 0, // ← total dari length array
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res.headers["x-total-count"] ?? "0", 10),
     }),
     keepPreviousData: true,
   });

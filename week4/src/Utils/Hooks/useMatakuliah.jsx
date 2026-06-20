@@ -12,9 +12,9 @@ export const useMatakuliah = (query = {}) =>
   useQuery({
     queryKey: ["matakuliah", query],
     queryFn: () => getAllMatakuliah(query),
-    select: (data) => ({
-      data: data ?? [],
-      total: data?.length ?? 0,
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res.headers["x-total-count"] ?? "0", 10),
     }),
     keepPreviousData: true,
   });

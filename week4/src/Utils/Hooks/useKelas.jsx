@@ -11,9 +11,9 @@ export const useKelas = (query = {}) =>
   useQuery({
     queryKey: ["kelas", query],
     queryFn: () => getAllKelas(query),
-    select: (data) => ({
-      data: data ?? [],
-      total: data?.length ?? 0,
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res.headers["x-total-count"] ?? "0", 10),
     }),
     keepPreviousData: true,
   });
