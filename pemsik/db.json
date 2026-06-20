@@ -317,10 +317,12 @@
       "hari": "Senin",
       "jam_mulai": "08:00",
       "jam_selesai": "10:00",
-      "kapasitas": 10,
+      "kapasitas": 4,
       "mahasiswa_ids": [
         1,
-        9
+        9,
+        17,
+        18
       ],
       "status": true,
       "id": 2
