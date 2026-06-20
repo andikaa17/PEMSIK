@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "nidn": "D2023.11441",
+    "nama": "Slamet",
+    "email": "slamet@dosen.ac.id",
+    "max_sks": 12,
+    "status": true
+  },
+  {
+    "id": 2,
+    "nidn": "D2023.11442",
+    "nama": "Tini",
+    "email": "tini@dosen.ac.id",
+    "max_sks": 10,
+    "status": true
+  },
+  {
+    "id": 3,
+    "nidn": "D2023.11443",
+    "nama": "Udin",
+    "email": "udin@dosen.ac.id",
+    "max_sks": 14,
+    "status": true
+  },
+  {
+    "id": 4,
+    "nidn": "D2023.11444",
+    "nama": "Vina",
+    "email": "vina@dosen.ac.id",
+    "max_sks": 16,
+    "status": true
+  },
+  {
+    "id": 5,
+    "nidn": "D2023.11445",
+    "nama": "Wawan",
+    "email": "wawan@dosen.ac.id",
+    "max_sks": 8,
+    "status": true
+  }
+]

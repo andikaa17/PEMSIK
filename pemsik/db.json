@@ -41,14 +41,12 @@
       "role": "dosen"
     },
     {
-      "id": 5,
       "nidn": "D005",
       "nama": "Wawan",
       "email": "wawan@dosen.ac.id",
-      "password": "wawan123",
       "max_sks": 8,
       "status": true,
-      "role": "dosen"
+      "id": 5
     }
   ],
   "mahasiswa": [
@@ -90,14 +88,11 @@
       "id": 4
     },
     {
-      "id": 5,
       "nim": "M005",
       "nama": "Eko",
-      "email": "eko@mahasiswa.ac.id",
-      "password": "eko123",
       "max_sks": 20,
       "status": true,
-      "role": "mahasiswa"
+      "id": 5
     },
     {
       "id": 6,
@@ -280,11 +275,11 @@
       "status": true
     },
     {
-      "id": 5,
       "kode": "MK005",
       "nama": "Pembelajaran Mesin",
       "sks": 3,
-      "status": true
+      "status": true,
+      "id": 5
     }
   ],
   "kelas": [
@@ -300,7 +295,14 @@
       "jam_mulai": "09:30",
       "jam_selesai": "12:00",
       "kapasitas": 36,
-      "mahasiswa_ids": [1, 2, 3, 4, 16, 7],
+      "mahasiswa_ids": [
+        1,
+        2,
+        3,
+        4,
+        16,
+        7
+      ],
       "status": true,
       "id": 1
     },
@@ -316,7 +318,10 @@
       "jam_mulai": "08:00",
       "jam_selesai": "10:00",
       "kapasitas": 10,
-      "mahasiswa_ids": [1, 9],
+      "mahasiswa_ids": [
+        1,
+        9
+      ],
       "status": true,
       "id": 2
     },
@@ -332,7 +337,18 @@
       "jam_mulai": "08:40",
       "jam_selesai": "12:00",
       "kapasitas": 12,
-      "mahasiswa_ids": [17, 12, 5, 1, 2, 3, 6, 18, 11, 7],
+      "mahasiswa_ids": [
+        17,
+        12,
+        5,
+        1,
+        2,
+        3,
+        6,
+        18,
+        11,
+        7
+      ],
       "status": true,
       "id": 3
     },
@@ -349,7 +365,10 @@
       "jam_mulai": "12:00",
       "jam_selesai": "16:00",
       "kapasitas": 10,
-      "mahasiswa_ids": [19, 17, 7],
+      "mahasiswa_ids": [
+        19,
+        17
+      ],
       "status": true
     },
     {
@@ -364,7 +383,13 @@
       "jam_mulai": "12:00",
       "jam_selesai": "15:00",
       "kapasitas": 37,
-      "mahasiswa_ids": [20, 1, 18, 19, 2],
+      "mahasiswa_ids": [
+        20,
+        1,
+        18,
+        19,
+        2
+      ],
       "status": true,
       "id": 5
     }
@@ -411,7 +436,10 @@
       "email": "slamet@dosen.ac.id",
       "password": "slamet123",
       "role": "dosen",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 3,
@@ -419,7 +447,10 @@
       "email": "tini@dosen.ac.id",
       "password": "tini123",
       "role": "dosen",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 4,
@@ -427,7 +458,10 @@
       "email": "udin@dosen.ac.id",
       "password": "udin123",
       "role": "dosen",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 5,
@@ -435,7 +469,10 @@
       "email": "vina@dosen.ac.id",
       "password": "vina123",
       "role": "dosen",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 6,
@@ -443,7 +480,10 @@
       "email": "wawan@dosen.ac.id",
       "password": "wawan123",
       "role": "dosen",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 7,
@@ -451,7 +491,10 @@
       "email": "andi@mahasiswa.ac.id",
       "password": "andi123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 8,
@@ -459,7 +502,10 @@
       "email": "budi@mahasiswa.ac.id",
       "password": "budi123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 9,
@@ -467,7 +513,10 @@
       "email": "citra@mahasiswa.ac.id",
       "password": "citra123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 10,
@@ -475,7 +524,10 @@
       "email": "dina@mahasiswa.ac.id",
       "password": "dina123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 11,
@@ -483,7 +535,10 @@
       "email": "eko@mahasiswa.ac.id",
       "password": "eko123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 12,
@@ -491,7 +546,10 @@
       "email": "fajar@mahasiswa.ac.id",
       "password": "fajar123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 13,
@@ -499,7 +557,10 @@
       "email": "gita@mahasiswa.ac.id",
       "password": "gita123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 14,
@@ -507,7 +568,10 @@
       "email": "hani@mahasiswa.ac.id",
       "password": "hani123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 15,
@@ -515,7 +579,10 @@
       "email": "iwan@mahasiswa.ac.id",
       "password": "iwan123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 16,
@@ -523,7 +590,10 @@
       "email": "joko@mahasiswa.ac.id",
       "password": "joko123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 17,
@@ -531,7 +601,10 @@
       "email": "kiki@mahasiswa.ac.id",
       "password": "kiki123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 18,
@@ -539,7 +612,10 @@
       "email": "lia@mahasiswa.ac.id",
       "password": "lia123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 19,
@@ -547,7 +623,10 @@
       "email": "maya@mahasiswa.ac.id",
       "password": "maya123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 20,
@@ -555,7 +634,10 @@
       "email": "nina@mahasiswa.ac.id",
       "password": "nina123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 21,
@@ -563,7 +645,10 @@
       "email": "oki@mahasiswa.ac.id",
       "password": "oki123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 22,
@@ -571,7 +656,10 @@
       "email": "putri@mahasiswa.ac.id",
       "password": "putri123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 23,
@@ -579,7 +667,10 @@
       "email": "qila@mahasiswa.ac.id",
       "password": "qila123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 24,
@@ -587,7 +678,10 @@
       "email": "rudi@mahasiswa.ac.id",
       "password": "rudi123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 25,
@@ -595,7 +689,10 @@
       "email": "salsa@mahasiswa.ac.id",
       "password": "salsa123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     },
     {
       "id": 26,
@@ -603,7 +700,10 @@
       "email": "tino@mahasiswa.ac.id",
       "password": "tino123",
       "role": "mahasiswa",
-      "permission": ["rencana-studi.page", "rencana-studi.read"]
+      "permission": [
+        "rencana-studi.page",
+        "rencana-studi.read"
+      ]
     }
   ]
 }
