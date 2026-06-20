@@ -133,7 +133,7 @@ const Mahasiswa = () => {
           <Heading as="h2" className="mb-0 text-left">
             Daftar Mahasiswa
           </Heading>
-          {user?.permission?.includes("mahasiswa.create") && (
+          {user?.role === "admin" && (
             <Button onClick={openAddModal}>+ Tambah Mahasiswa</Button>
           )}
         </div>
@@ -189,15 +189,13 @@ const Mahasiswa = () => {
           </select>
         </div>
 
-        {user?.permission?.includes("mahasiswa.read") && (
-          <MahasiswaTable
-            mahasiswa={mahasiswa}
-            openEditModal={openEditModal}
-            onDelete={handleDelete}
-            isLoading={isLoadingMahasiswa}
-            getTotalSks={getTotalSks}
-          />
-        )}
+        <MahasiswaTable
+          mahasiswa={mahasiswa}
+          openEditModal={openEditModal}
+          onDelete={handleDelete}
+          isLoading={isLoadingMahasiswa}
+          getTotalSks={getTotalSks}
+        />
 
         {totalPages > 0 && (
           <div className="flex justify-between items-center mt-4">

@@ -292,7 +292,7 @@ const RencanaStudi = () => {
               Export PDF
             </button>
 
-            {user?.permission?.includes("rencana-studi.create") && (
+            {user?.role === "admin" && (
               <Button onClick={openAddModal}>+ Tambah Kelas</Button>
             )}
           </div>

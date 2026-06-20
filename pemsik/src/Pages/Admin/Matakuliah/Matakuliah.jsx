@@ -106,7 +106,7 @@ const Matakuliah = () => {
           <Heading as="h2" className="mb-0 text-left">
             Daftar Mata Kuliah
           </Heading>
-          {user?.permission?.includes("matakuliah.create") && (
+          {user?.role === "admin" && (
             <Button onClick={openAddModal}>+ Tambah Mata Kuliah</Button>
           )}
         </div>
@@ -163,14 +163,12 @@ const Matakuliah = () => {
           </select>
         </div>
 
-        {user?.permission?.includes("matakuliah.read") && (
-          <MatakuliahTable
-            matakuliah={matakuliah}
-            openEditModal={openEditModal}
-            onDelete={handleDelete}
-            isLoading={isLoadingMatakuliah}
-          />
-        )}
+        <MatakuliahTable
+          matakuliah={matakuliah}
+          openEditModal={openEditModal}
+          onDelete={handleDelete}
+          isLoading={isLoadingMatakuliah}
+        />
 
         {totalPages > 0 && (
           <div className="flex justify-between items-center mt-4">

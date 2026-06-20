@@ -121,7 +121,7 @@ const KelasTable = ({
                     >
                       Detail
                     </Link>
-                    {user?.permission?.includes("kelas.update") && (
+                    {user?.role === "admin" && (
                       <Button
                         size="sm"
                         variant="warning"
@@ -130,7 +130,7 @@ const KelasTable = ({
                         Edit
                       </Button>
                     )}
-                    {user?.permission?.includes("kelas.delete") && (
+                    {user?.role === "admin" && (
                       <Button
                         size="sm"
                         variant="danger"

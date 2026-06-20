@@ -63,7 +63,7 @@ const Sidebar = () => {
         )}
 
         {/* MAHASISWA - HANYA ADMIN */}
-        {isAdmin && user?.permission?.includes("mahasiswa.page") && (
+        {isAdmin && (
           <NavLink
             to="/admin/mahasiswa"
             className={({ isActive }) =>
@@ -78,7 +78,7 @@ const Sidebar = () => {
         )}
 
         {/* DOSEN - HANYA ADMIN */}
-        {isAdmin && user?.permission?.includes("dosen.page") && (
+        {isAdmin && (
           <NavLink
             to="/admin/dosen"
             className={({ isActive }) =>
@@ -93,7 +93,7 @@ const Sidebar = () => {
         )}
 
         {/* MATA KULIAH - HANYA ADMIN */}
-        {isAdmin && user?.permission?.includes("matakuliah.page") && (
+        {isAdmin && (
           <NavLink
             to="/admin/matakuliah"
             className={({ isActive }) =>
@@ -108,7 +108,7 @@ const Sidebar = () => {
         )}
 
         {/* KELAS - HANYA ADMIN */}
-        {isAdmin && user?.permission?.includes("kelas.page") && (
+        {isAdmin && (
           <NavLink
             to="/admin/kelas"
             className={({ isActive }) =>
@@ -123,20 +123,19 @@ const Sidebar = () => {
         )}
 
         {/* RENCANA STUDI - ADMIN & DOSEN */}
-        {(isAdmin || isDosen) &&
-          user?.permission?.includes("rencana-studi.page") && (
-            <NavLink
-              to={isAdmin ? "/admin/rencana-studi" : "/dosen/rencana-studi"}
-              className={({ isActive }) =>
-                `flex items-center space-x-2 px-4 py-2 rounded ${
-                  isActive ? "bg-blue-700" : "hover:bg-blue-700"
-                }`
-              }
-            >
-              <ClipboardList size={20} />
-              <span className="menu-text hidden lg:inline">Rencana Studi</span>
-            </NavLink>
-          )}
+        {(isAdmin || isDosen) && (
+          <NavLink
+            to={isAdmin ? "/admin/rencana-studi" : "/dosen/rencana-studi"}
+            className={({ isActive }) =>
+              `flex items-center space-x-2 px-4 py-2 rounded ${
+                isActive ? "bg-blue-700" : "hover:bg-blue-700"
+              }`
+            }
+          >
+            <ClipboardList size={20} />
+            <span className="menu-text hidden lg:inline">Rencana Studi</span>
+          </NavLink>
+        )}
 
         {/* JADWAL - DOSEN & MAHASISWA */}
         {(isDosen || isMahasiswa) && (

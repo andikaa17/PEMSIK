@@ -134,7 +134,7 @@ const Kelas = () => {
           <Heading as="h2" className="mb-0 text-left">
             Daftar Kelas
           </Heading>
-          {user?.permission?.includes("kelas.create") && (
+          {user?.role === "admin" && (
             <Button onClick={openAddModal}>+ Tambah Kelas</Button>
           )}
         </div>
@@ -191,16 +191,14 @@ const Kelas = () => {
           </select>
         </div>
 
-        {user?.permission?.includes("kelas.read") && (
-          <KelasTable
-            kelas={kelas}
-            matakuliah={matakuliah}
-            dosen={dosen}
-            openEditModal={openEditModal}
-            onDelete={handleDelete}
-            isLoading={isLoadingKelas}
-          />
-        )}
+        <KelasTable
+          kelas={kelas}
+          matakuliah={matakuliah}
+          dosen={dosen}
+          openEditModal={openEditModal}
+          onDelete={handleDelete}
+          isLoading={isLoadingKelas}
+        />
 
         {totalPages > 0 && (
           <div className="flex justify-between items-center mt-4">

@@ -1,13 +1,14 @@
-import usersData from "@/../db/user.json";
+import { supabase } from "@/supabaseClient";
 
 export const login = async (email, password) => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  const { data: user, error } = await supabase
+    .from("app_user")
+    .select("*")
+    .eq("email", email)
+    .eq("password", password)
+    .single();
 
-  const user = usersData.find(
-    (u) => u.email === email && u.password === password,
-  );
-
-  if (!user) {
+  if (error || !user) {
     throw new Error("Email atau password salah");
   }
 

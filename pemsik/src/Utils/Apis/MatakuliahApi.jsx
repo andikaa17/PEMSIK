@@ -1,8 +1,46 @@
-import axios from "@/Utils/AxiosInstance";
-export const getAllMatakuliah = (params = {}) =>
-  axios.get("/matakuliah", { params });
-export const getMatakuliah = (id) => axios.get(`/matakuliah/${id}`);
-export const storeMatakuliah = (data) => axios.post("/matakuliah", data);
-export const updateMatakuliah = (id, data) =>
-  axios.put(`/matakuliah/${id}`, data);
-export const deleteMatakuliah = (id) => axios.delete(`/matakuliah/${id}`);
+import { supabase } from "@/supabaseClient";
+
+export const getAllMatakuliah = async () => {
+  const { data, error } = await supabase.from("matakuliah").select("*");
+  if (error) throw error;
+  return { data };
+};
+
+export const getMatakuliah = async (id) => {
+  const { data, error } = await supabase
+    .from("matakuliah")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) throw error;
+  return { data };
+};
+
+export const storeMatakuliah = async (payload) => {
+  const { data, error } = await supabase
+    .from("matakuliah")
+    .insert(payload)
+    .select();
+  if (error) throw error;
+  return { data };
+};
+
+export const updateMatakuliah = async (id, payload) => {
+  const { data, error } = await supabase
+    .from("matakuliah")
+    .update(payload)
+    .eq("id", id)
+    .select();
+  if (error) throw error;
+  return { data };
+};
+
+export const deleteMatakuliah = async (id) => {
+  const { data, error } = await supabase
+    .from("matakuliah")
+    .delete()
+    .eq("id", id)
+    .select();
+  if (error) throw error;
+  return { data };
+};

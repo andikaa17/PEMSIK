@@ -102,7 +102,7 @@ const DosenTable = ({
                 >
                   Detail
                 </Link>
-                {user?.permission?.includes("dosen.update") && (
+                {user?.role === "admin" && (
                   <Button
                     size="sm"
                     variant="warning"
@@ -111,7 +111,7 @@ const DosenTable = ({
                     Edit
                   </Button>
                 )}
-                {user?.permission?.includes("dosen.delete") && (
+                {user?.role === "admin" && (
                   <Button
                     size="sm"
                     variant="danger"

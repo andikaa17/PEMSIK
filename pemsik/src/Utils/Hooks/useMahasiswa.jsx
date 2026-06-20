@@ -7,15 +7,51 @@ import {
 } from "@/Utils/Apis/MahasiswaApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-// Hook untuk get all dengan pagination
+// Hook untuk get all dengan pagination (dilakukan di client side)
 export const useMahasiswa = (query = {}) =>
   useQuery({
-    queryKey: ["mahasiswa", query],
-    queryFn: () => getAllMahasiswa(query),
-    select: (res) => ({
-      data: res?.data ?? [],
-      total: parseInt(res.headers["x-total-count"] ?? "0", 10),
-    }),
+    queryKey: ["mahasiswa"],
+    queryFn: () => getAllMahasiswa(),
+    select: (res) => {
+      let data = res?.data ?? [];
+
+      // Search (berdasarkan nama atau nim)
+      if (query.q) {
+        const keyword = query.q.toLowerCase();
+        data = data.filter(
+          (m) =>
+            m.nama?.toLowerCase().includes(keyword) ||
+            m.nim?.toLowerCase().includes(keyword),
+        );
+      }
+
+      // Sort
+      if (query._sort) {
+        data = [...data].sort((a, b) => {
+          const valA = a[query._sort];
+          const valB = b[query._sort];
+          if (valA == null) return 1;
+          if (valB == null) return -1;
+          if (typeof valA === "number") {
+            return query._order === "desc" ? valB - valA : valA - valB;
+          }
+          return query._order === "desc"
+            ? String(valB).localeCompare(String(valA))
+            : String(valA).localeCompare(String(valB));
+        });
+      }
+
+      const total = data.length;
+
+      // Pagination
+      if (query._page && query._limit) {
+        const start = (query._page - 1) * query._limit;
+        const end = start + query._limit;
+        data = data.slice(start, end);
+      }
+
+      return { data, total };
+    },
     keepPreviousData: true,
   });
 

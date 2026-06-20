@@ -79,7 +79,7 @@ const MahasiswaTable = ({
                   Detail
                 </Link>
 
-                {user?.permission?.includes("mahasiswa.update") && (
+                {user?.role === "admin" && (
                   <Button
                     size="sm"
                     variant="warning"
@@ -89,7 +89,7 @@ const MahasiswaTable = ({
                   </Button>
                 )}
 
-                {user?.permission?.includes("mahasiswa.delete") && (
+                {user?.role === "admin" && (
                   <Button
                     size="sm"
                     variant="danger"

@@ -7,14 +7,51 @@ import {
 } from "@/Utils/Apis/KelasApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
+// Hook untuk get all dengan pagination (dilakukan di client side)
 export const useKelas = (query = {}) =>
   useQuery({
-    queryKey: ["kelas", query],
-    queryFn: () => getAllKelas(query),
-    select: (res) => ({
-      data: res?.data ?? [],
-      total: parseInt(res.headers["x-total-count"] ?? "0", 10),
-    }),
+    queryKey: ["kelas"],
+    queryFn: () => getAllKelas(),
+    select: (res) => {
+      let data = res?.data ?? [];
+
+      // Search (berdasarkan nama atau kode)
+      if (query.q) {
+        const keyword = query.q.toLowerCase();
+        data = data.filter(
+          (k) =>
+            k.nama?.toLowerCase().includes(keyword) ||
+            k.kode?.toLowerCase().includes(keyword),
+        );
+      }
+
+      // Sort
+      if (query._sort) {
+        data = [...data].sort((a, b) => {
+          const valA = a[query._sort];
+          const valB = b[query._sort];
+          if (valA == null) return 1;
+          if (valB == null) return -1;
+          if (typeof valA === "number") {
+            return query._order === "desc" ? valB - valA : valA - valB;
+          }
+          return query._order === "desc"
+            ? String(valB).localeCompare(String(valA))
+            : String(valA).localeCompare(String(valB));
+        });
+      }
+
+      const total = data.length;
+
+      // Pagination
+      if (query._page && query._limit) {
+        const start = (query._page - 1) * query._limit;
+        const end = start + query._limit;
+        data = data.slice(start, end);
+      }
+
+      return { data, total };
+    },
     keepPreviousData: true,
   });
 

@@ -124,7 +124,7 @@ const Dosen = () => {
           <Heading as="h2" className="mb-0 text-left">
             Daftar Dosen
           </Heading>
-          {user?.permission?.includes("dosen.create") && (
+          {user?.role === "admin" && (
             <Button onClick={openAddModal}>+ Tambah Dosen</Button>
           )}
         </div>
@@ -180,16 +180,14 @@ const Dosen = () => {
           </select>
         </div>
 
-        {user?.permission?.includes("dosen.read") && (
-          <DosenTable
-            dosen={dosen}
-            kelas={kelas}
-            mataKuliah={mataKuliah}
-            openEditModal={openEditModal}
-            onDelete={handleDelete}
-            isLoading={isLoadingDosen}
-          />
-        )}
+        <DosenTable
+          dosen={dosen}
+          kelas={kelas}
+          mataKuliah={mataKuliah}
+          openEditModal={openEditModal}
+          onDelete={handleDelete}
+          isLoading={isLoadingDosen}
+        />
 
         {totalPages > 0 && (
           <div className="flex justify-between items-center mt-4">

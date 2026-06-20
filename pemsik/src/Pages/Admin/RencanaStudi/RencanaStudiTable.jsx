@@ -70,7 +70,7 @@ const RencanaStudiTable = ({
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                {user?.permission?.includes("rencana-studi.update") && (
+                {user?.role === "admin" && (
                   <>
                     <Select
                       value={selectedDsn[kls.id] || ""}
@@ -96,7 +96,7 @@ const RencanaStudiTable = ({
                   </>
                 )}
 
-                {user?.permission?.includes("rencana-studi.delete") && (
+                {user?.role === "admin" && (
                   <Button
                     size="sm"
                     variant="danger"
@@ -166,9 +166,7 @@ const RencanaStudiTable = ({
                           </span>
                         </td>
                         <td className="py-2 px-4 text-center">
-                          {user?.permission?.includes(
-                            "rencana-studi.update",
-                          ) && (
+                          {user?.role === "admin" && (
                             <Button
                               size="sm"
                               variant="danger"
@@ -194,7 +192,7 @@ const RencanaStudiTable = ({
               </tbody>
             </table>
 
-            {user?.permission?.includes("rencana-studi.update") && (
+            {user?.role === "admin" && (
               <div className="flex flex-wrap items-center gap-2 px-4 py-3 border-t bg-gray-50">
                 <Select
                   value={selectedMhs[kls.id] || ""}

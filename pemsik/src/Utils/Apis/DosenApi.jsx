@@ -1,7 +1,43 @@
-import axios from "@/Utils/AxiosInstance";
+import { supabase } from "@/supabaseClient";
 
-export const getAllDosen = (params = {}) => axios.get("/dosen", { params });
-export const getDosen = (id) => axios.get(`/dosen/${id}`);
-export const storeDosen = (data) => axios.post("/dosen", data);
-export const updateDosen = (id, data) => axios.put(`/dosen/${id}`, data);
-export const deleteDosen = (id) => axios.delete(`/dosen/${id}`);
+export const getAllDosen = async () => {
+  const { data, error } = await supabase.from("dosen").select("*");
+  if (error) throw error;
+  return { data };
+};
+
+export const getDosen = async (id) => {
+  const { data, error } = await supabase
+    .from("dosen")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) throw error;
+  return { data };
+};
+
+export const storeDosen = async (payload) => {
+  const { data, error } = await supabase.from("dosen").insert(payload).select();
+  if (error) throw error;
+  return { data };
+};
+
+export const updateDosen = async (id, payload) => {
+  const { data, error } = await supabase
+    .from("dosen")
+    .update(payload)
+    .eq("id", id)
+    .select();
+  if (error) throw error;
+  return { data };
+};
+
+export const deleteDosen = async (id) => {
+  const { data, error } = await supabase
+    .from("dosen")
+    .delete()
+    .eq("id", id)
+    .select();
+  if (error) throw error;
+  return { data };
+};

@@ -65,7 +65,7 @@ const MatakuliahTable = ({
                 Detail
               </Link>
 
-              {user?.permission?.includes("matakuliah.update") && (
+              {user?.role === "admin" && (
                 <Button
                   size="sm"
                   variant="warning"
@@ -75,7 +75,7 @@ const MatakuliahTable = ({
                 </Button>
               )}
 
-              {user?.permission?.includes("matakuliah.delete") && (
+              {user?.role === "admin" && (
                 <Button
                   size="sm"
                   variant="danger"

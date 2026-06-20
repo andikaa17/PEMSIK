@@ -1,10 +1,46 @@
-import axios from "@/Utils/AxiosInstance";
+import { supabase } from "@/supabaseClient";
 
+export const getAllMahasiswa = async () => {
+  const { data, error } = await supabase.from("mahasiswa").select("*");
+  if (error) throw error;
+  return { data };
+};
 
-export const getAllMahasiswa = (params = {}) =>
-  axios.get("/mahasiswa", { params });
-export const getMahasiswa = (id) => axios.get(`/mahasiswa/${id}`);
-export const storeMahasiswa = (data) => axios.post("/mahasiswa", data);
-export const updateMahasiswa = (id, data) =>
-  axios.put(`/mahasiswa/${id}`, data);
-export const deleteMahasiswa = (id) => axios.delete(`/mahasiswa/${id}`);
+export const getMahasiswa = async (id) => {
+  const { data, error } = await supabase
+    .from("mahasiswa")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) throw error;
+  return { data };
+};
+
+export const storeMahasiswa = async (payload) => {
+  const { data, error } = await supabase
+    .from("mahasiswa")
+    .insert(payload)
+    .select();
+  if (error) throw error;
+  return { data };
+};
+
+export const updateMahasiswa = async (id, payload) => {
+  const { data, error } = await supabase
+    .from("mahasiswa")
+    .update(payload)
+    .eq("id", id)
+    .select();
+  if (error) throw error;
+  return { data };
+};
+
+export const deleteMahasiswa = async (id) => {
+  const { data, error } = await supabase
+    .from("mahasiswa")
+    .delete()
+    .eq("id", id)
+    .select();
+  if (error) throw error;
+  return { data };
+};
