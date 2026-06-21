@@ -67,12 +67,22 @@ const Header = () => {
               </p>
               <p className="text-xs text-gray-500">{user?.email}</p>
             </div>
-            <a
-              href="#"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+            <button
+              onClick={() => {
+                const path =
+                  user?.role === "admin"
+                    ? "/admin/profile"
+                    : user?.role === "dosen"
+                      ? "/dosen/profile"
+                      : "/mahasiswa/profile";
+                navigate(path);
+                toggleProfileMenu();
+              }}
+              className="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100"
             >
               Profile
-            </a>
+            </button>
+
             <button
               onClick={handleLogout}
               className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"

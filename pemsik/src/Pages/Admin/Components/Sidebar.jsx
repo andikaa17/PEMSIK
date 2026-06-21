@@ -9,6 +9,7 @@ import {
   ClipboardList,
   FileText,
   Calendar,
+  UserCircle,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -164,6 +165,27 @@ const Sidebar = () => {
           >
             <FileText size={20} />
             <span className="menu-text hidden lg:inline">KRS</span>
+          </NavLink>
+        )}
+
+        {/* PROFILE - SEMUA ROLE */}
+        {(isAdmin || isDosen || isMahasiswa) && (
+          <NavLink
+            to={
+              isAdmin
+                ? "/admin/profile"
+                : isDosen
+                  ? "/dosen/profile"
+                  : "/mahasiswa/profile"
+            }
+            className={({ isActive }) =>
+              `flex items-center space-x-2 px-4 py-2 rounded ${
+                isActive ? "bg-blue-700" : "hover:bg-blue-700"
+              }`
+            }
+          >
+            <UserCircle size={20} />
+            <span className="menu-text hidden lg:inline">Profile</span>
           </NavLink>
         )}
       </nav>

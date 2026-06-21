@@ -37,6 +37,7 @@ import RencanaStudiDosen from "@/Pages/Dosen/RencanaStudi/RencanaStudiDosen";
 import JadwalDosen from "@/Pages/Dosen/JadwalMengajar/JadwalDosen";
 import KRS from "@/Pages/Mahasiswa/KRS/KRS";
 import Jadwal from "@/Pages/Mahasiswa/Jadwal/Jadwal";
+import Profile from "@/Pages/Profile/Profile";
 
 const queryClient = new QueryClient();
 
@@ -128,6 +129,10 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
     ],
   },
   {
@@ -158,6 +163,10 @@ const router = createBrowserRouter([
         path: "rencana-studi",
         element: <RencanaStudi />,
       },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
     ],
   },
   {
@@ -183,6 +192,10 @@ const router = createBrowserRouter([
       {
         path: "jadwal",
         element: <JadwalDosen />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },
