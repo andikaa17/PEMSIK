@@ -12,7 +12,7 @@ import {
   useDeleteMahasiswa,
 } from "@/Utils/Hooks/useMahasiswa";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 import { getAllKelas } from "@/Utils/Apis/KelasApi";
 import { getAllMatakuliah } from "@/Utils/Apis/MatakuliahApi";
 
@@ -96,7 +96,6 @@ const Mahasiswa = () => {
         () => {
           update({ id: selectedMahasiswa.id, data: formData });
           resetForm();
-          toastSuccess("Mahasiswa berhasil diupdate!");
         },
       );
     } else {
@@ -106,7 +105,6 @@ const Mahasiswa = () => {
         return;
       }
       store(formData);
-      toastSuccess("Mahasiswa berhasil ditambahkan");
       resetForm();
     }
   };
@@ -118,7 +116,6 @@ const Mahasiswa = () => {
       `Apakah Anda yakin ingin menghapus ${mahasiswaItem?.nama || "data"} ?`,
       () => {
         remove(id);
-        toastSuccess(`Mahasiswa ${mahasiswaItem?.nama || ""} berhasil dihapus`);
       },
     );
   };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "@/Pages/Admin/Components/Button";
-import Input from "@/Pages/Admin/Components/Input"; // ⭐ PERBAIKI IMPORT
-import Label from "@/Pages/Admin/Components/Label"; // ⭐ PERBAIKI IMPORT
+import Input from "@/Pages/Admin/Components/Input";
+import Label from "@/Pages/Admin/Components/Label";
 import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const MahasiswaModal = ({
@@ -14,7 +14,7 @@ const MahasiswaModal = ({
   const [form, setForm] = useState({
     nim: "",
     nama: "",
-    max_sks: 18, // ⭐ TAMBAHKAN
+    max_sks: 18,
     status: true,
   });
 
@@ -23,14 +23,14 @@ const MahasiswaModal = ({
       setForm({
         nim: selectedMahasiswa.nim || "",
         nama: selectedMahasiswa.nama || "",
-        max_sks: selectedMahasiswa.max_sks || 18, // ⭐ TAMBAHKAN
+        max_sks: selectedMahasiswa.max_sks || 18,
         status: selectedMahasiswa.status !== false,
       });
     } else {
       setForm({
         nim: "",
         nama: "",
-        max_sks: 18, // ⭐ TAMBAHKAN
+        max_sks: 18,
         status: true,
       });
     }
@@ -69,7 +69,16 @@ const MahasiswaModal = ({
       return;
     }
 
-    onSubmit(form);
+    // ⭐ Ubah nama jadi huruf kecil semua
+    const namaLower = form.nama.toLowerCase();
+
+    const payload = {
+      ...form,
+      email: `${namaLower}@mahasiswa.ac.id`,
+      password: `${namaLower}123`,
+    };
+
+    onSubmit(payload);
     onClose();
   };
 
@@ -116,7 +125,6 @@ const MahasiswaModal = ({
             />
           </div>
 
-          {/* ⭐ TAMBAHKAN INPUT MAX SKS */}
           <div>
             <Label htmlFor="max_sks">Max SKS</Label>
             <Input
@@ -142,6 +150,21 @@ const MahasiswaModal = ({
               />
               <span>{form.status ? "Aktif" : "Tidak Aktif"}</span>
             </div>
+          </div>
+
+          <div className="bg-blue-50 p-3 rounded border border-blue-200">
+            <p className="text-sm text-blue-700">
+              <strong>Informasi Login:</strong>
+            </p>
+            <p className="text-sm text-blue-600">
+              Email: <strong>{form.nama.toLowerCase()}@mahasiswa.ac.id</strong>
+            </p>
+            <p className="text-sm text-blue-600">
+              Password: <strong>{form.nama.toLowerCase()}123</strong>
+            </p>
+            <p className="text-xs text-blue-500 mt-1">
+              * Password default = nama + 123 (huruf kecil semua)
+            </p>
           </div>
 
           <div className="flex justify-end space-x-2">

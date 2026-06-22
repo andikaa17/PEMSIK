@@ -7,7 +7,6 @@ import {
 } from "@/Utils/Apis/MahasiswaApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-// Hook untuk get all dengan pagination (dilakukan di client side)
 export const useMahasiswa = (query = {}) =>
   useQuery({
     queryKey: ["mahasiswa"],
@@ -15,7 +14,6 @@ export const useMahasiswa = (query = {}) =>
     select: (res) => {
       let data = res?.data ?? [];
 
-      // Search (berdasarkan nama atau nim)
       if (query.q) {
         const keyword = query.q.toLowerCase();
         data = data.filter(
@@ -25,7 +23,6 @@ export const useMahasiswa = (query = {}) =>
         );
       }
 
-      // Sort
       if (query._sort) {
         data = [...data].sort((a, b) => {
           const valA = a[query._sort];
@@ -43,7 +40,6 @@ export const useMahasiswa = (query = {}) =>
 
       const total = data.length;
 
-      // Pagination
       if (query._page && query._limit) {
         const start = (query._page - 1) * query._limit;
         const end = start + query._limit;
@@ -63,7 +59,10 @@ export const useStoreMahasiswa = () => {
       queryClient.invalidateQueries({ queryKey: ["mahasiswa"] });
       toastSuccess("Mahasiswa berhasil ditambahkan!");
     },
-    onError: () => toastError("Gagal menambahkan mahasiswa."),
+    onError: (error) => {
+      console.error("Store error:", error);
+      toastError(error.message || "Gagal menambahkan mahasiswa.");
+    },
   });
 };
 
@@ -75,7 +74,10 @@ export const useUpdateMahasiswa = () => {
       queryClient.invalidateQueries({ queryKey: ["mahasiswa"] });
       toastSuccess("Mahasiswa berhasil diperbarui!");
     },
-    onError: () => toastError("Gagal memperbarui mahasiswa."),
+    onError: (error) => {
+      console.error("Update error:", error);
+      toastError(error.message || "Gagal memperbarui mahasiswa.");
+    },
   });
 };
 
@@ -87,6 +89,9 @@ export const useDeleteMahasiswa = () => {
       queryClient.invalidateQueries({ queryKey: ["mahasiswa"] });
       toastSuccess("Mahasiswa berhasil dihapus!");
     },
-    onError: () => toastError("Gagal menghapus mahasiswa."),
+    onError: (error) => {
+      console.error("Delete error:", error);
+      toastError(error.message || "Gagal menghapus mahasiswa.");
+    },
   });
 };

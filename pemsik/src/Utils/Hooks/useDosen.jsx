@@ -7,7 +7,6 @@ import {
 } from "@/Utils/Apis/DosenApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-// Hook untuk get all dengan pagination (dilakukan di client side)
 export const useDosen = (query = {}) =>
   useQuery({
     queryKey: ["dosen"],
@@ -15,7 +14,6 @@ export const useDosen = (query = {}) =>
     select: (res) => {
       let data = res?.data ?? [];
 
-      // Search (berdasarkan nama atau nidn)
       if (query.q) {
         const keyword = query.q.toLowerCase();
         data = data.filter(
@@ -25,7 +23,6 @@ export const useDosen = (query = {}) =>
         );
       }
 
-      // Sort
       if (query._sort) {
         data = [...data].sort((a, b) => {
           const valA = a[query._sort];
@@ -43,7 +40,6 @@ export const useDosen = (query = {}) =>
 
       const total = data.length;
 
-      // Pagination
       if (query._page && query._limit) {
         const start = (query._page - 1) * query._limit;
         const end = start + query._limit;

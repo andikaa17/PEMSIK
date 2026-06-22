@@ -3,12 +3,18 @@ import Modal from "@/Pages/Admin/Components/Modal";
 import Button from "@/Pages/Admin/Components/Button";
 import Input from "@/Pages/Admin/Components/Input";
 import Label from "@/Pages/Admin/Components/Label";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
-const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
+const DosenModal = ({
+  isModalOpen,
+  onClose,
+  onSubmit,
+  selectedDosen,
+  dosen,
+}) => {
   const [form, setForm] = useState({
     nidn: "",
     nama: "",
-    email: "",
     max_sks: "",
     status: true,
   });
@@ -18,12 +24,11 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
       setForm({
         nidn: selectedDosen.nidn || "",
         nama: selectedDosen.nama || "",
-        email: selectedDosen.email || "",
         max_sks: selectedDosen.max_sks || "",
         status: selectedDosen.status ?? true,
       });
     } else {
-      setForm({ nidn: "", nama: "", email: "", max_sks: "", status: true });
+      setForm({ nidn: "", nama: "", max_sks: "", status: true });
     }
   }, [selectedDosen, isModalOpen]);
 
@@ -37,7 +42,37 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(form);
+
+    if (!form.nidn.trim() || !form.nama.trim()) {
+      toastError("NIDN dan Nama wajib diisi");
+      return;
+    }
+
+    if (!form.max_sks || form.max_sks < 1) {
+      toastError("Max SKS harus diisi minimal 1");
+      return;
+    }
+
+    const exists = dosen?.find(
+      (d) =>
+        d.nidn === form.nidn && (!selectedDosen || d.id !== selectedDosen.id),
+    );
+
+    if (exists) {
+      toastError("NIDN sudah terdaftar!");
+      return;
+    }
+
+    const namaLower = form.nama.toLowerCase();
+
+    const payload = {
+      ...form,
+      email: `${namaLower}@dosen.ac.id`,
+      password: `${namaLower}123`,
+    };
+
+    onSubmit(payload);
+    onClose();
   };
 
   return (
@@ -54,6 +89,8 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
             name="nidn"
             value={form.nidn}
             onChange={handleChange}
+            readOnly={!!selectedDosen}
+            placeholder="Masukkan NIDN"
             required
           />
         </div>
@@ -64,16 +101,7 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
             name="nama"
             value={form.nama}
             onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
+            placeholder="Masukkan Nama"
             required
           />
         </div>
@@ -102,6 +130,23 @@ const DosenModal = ({ isModalOpen, onClose, onSubmit, selectedDosen }) => {
             Aktif
           </Label>
         </div>
+
+        {/* Informasi Login */}
+        <div className="bg-blue-50 p-3 rounded border border-blue-200 mb-4">
+          <p className="text-sm text-blue-700">
+            <strong>Informasi Login:</strong>
+          </p>
+          <p className="text-sm text-blue-600">
+            Email: <strong>{form.nama.toLowerCase()}@dosen.ac.id</strong>
+          </p>
+          <p className="text-sm text-blue-600">
+            Password: <strong>{form.nama.toLowerCase()}123</strong>
+          </p>
+          <p className="text-xs text-blue-500 mt-1">
+            * Password default = nama + 123 (huruf kecil semua)
+          </p>
+        </div>
+
         <div className="flex justify-end gap-2">
           <Button type="button" variant="secondary" onClick={onClose}>
             Batal

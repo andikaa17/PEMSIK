@@ -12,7 +12,7 @@ import {
   useDeleteDosen,
 } from "@/Utils/Hooks/useDosen";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 import { getAllKelas } from "@/Utils/Apis/KelasApi";
 import { getAllMatakuliah } from "@/Utils/Apis/MatakuliahApi";
 
@@ -87,7 +87,6 @@ const Dosen = () => {
         () => {
           update({ id: selectedDosen.id, data: formData });
           resetForm();
-          toastSuccess("Dosen berhasil diupdate!");
         },
       );
     } else {
@@ -97,7 +96,6 @@ const Dosen = () => {
         return;
       }
       store(formData);
-      toastSuccess("Dosen berhasil ditambahkan");
       resetForm();
     }
   };
@@ -109,7 +107,6 @@ const Dosen = () => {
       `Apakah Anda yakin ingin menghapus ${dosenItem?.nama || "data"}?`,
       () => {
         remove(id);
-        toastSuccess(`Dosen ${dosenItem?.nama || ""} berhasil dihapus`);
       },
     );
   };
@@ -223,6 +220,7 @@ const Dosen = () => {
         onClose={resetForm}
         onSubmit={handleSubmit}
         selectedDosen={selectedDosen}
+        dosen={dosen}
       />
     </>
   );

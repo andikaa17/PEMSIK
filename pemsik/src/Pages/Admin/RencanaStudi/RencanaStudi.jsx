@@ -238,11 +238,8 @@ const RencanaStudi = () => {
 
   const handleSubmit = async (formData) => {
     try {
-      const matkul = mataKuliah.find((m) => m.id === formData.matakuliah_id);
-
       await storeKelas(formData);
       setIsModalOpen(false);
-      toastSuccess(`Kelas "${matkul?.nama || ""}" berhasil ditambahkan`);
       fetchData();
     } catch (error) {
       console.error("Error:", error);

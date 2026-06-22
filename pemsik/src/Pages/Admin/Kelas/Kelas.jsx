@@ -14,7 +14,7 @@ import {
 import { useMatakuliah } from "@/Utils/Hooks/useMatakuliah";
 import { useDosen } from "@/Utils/Hooks/useDosen";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const Kelas = () => {
   const { user } = useAuthStateContext();
@@ -45,9 +45,12 @@ const Kelas = () => {
   const matakuliah = resultMatakuliah.data;
   const dosen = resultDosen.data;
 
+  const { data: allKelasResult = { data: [] } } = useKelas({});
+  const allKelas = allKelasResult.data;
+
   const matakuliahBelumAdaKelas = matakuliah.filter((m) => {
     if (m.status === false) return false;
-    const usedInOtherClass = kelas.some(
+    const usedInOtherClass = allKelas.some(
       (k) => k.matakuliah_id === m.id && k.id !== selectedKelas?.id,
     );
     return !usedInOtherClass;
@@ -75,7 +78,7 @@ const Kelas = () => {
   const handleSubmit = (formData) => {
     const isEdit = !!selectedKelas;
 
-    const existingKelas = kelas.find(
+    const existingKelas = allKelas.find(
       (k) =>
         k.id !== selectedKelas?.id &&
         k.matakuliah_id === formData.matakuliah_id,
@@ -86,7 +89,7 @@ const Kelas = () => {
       return;
     }
 
-    const exists = kelas.find(
+    const exists = allKelas.find(
       (k) => k.id !== selectedKelas?.id && k.kode === formData.kode,
     );
 
@@ -102,12 +105,10 @@ const Kelas = () => {
         () => {
           update({ id: selectedKelas.id, data: formData });
           resetForm();
-          toastSuccess("Kelas berhasil diupdate!");
         },
       );
     } else {
       store(formData);
-      toastSuccess("Kelas berhasil ditambahkan");
       resetForm();
     }
   };
@@ -119,7 +120,6 @@ const Kelas = () => {
       `Apakah Anda yakin ingin menghapus ${kelasItem?.nama || "data"} ini?`,
       () => {
         remove(id);
-        toastSuccess(`Kelas ${kelasItem?.nama || ""} berhasil dihapus`);
       },
     );
   };
@@ -236,7 +236,7 @@ const Kelas = () => {
         selectedKelas={selectedKelas}
         matakuliah={matakuliahBelumAdaKelas}
         dosen={dosen}
-        listKelas={kelas}
+        listKelas={allKelas}
       />
     </>
   );

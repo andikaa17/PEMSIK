@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import Card from "@/Pages/Admin/Components/Card";
 import Heading from "@/Pages/Admin/Components/Heading";
 import Button from "@/Pages/Admin/Components/Button";
@@ -12,10 +13,11 @@ import {
   useDeleteMatakuliah,
 } from "@/Utils/Hooks/useMatakuliah";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const Matakuliah = () => {
   const { user } = useAuthStateContext();
+  const queryClient = useQueryClient();
   const [selectedMatakuliah, setSelectedMatakuliah] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -28,6 +30,7 @@ const Matakuliah = () => {
   const {
     data: result = { data: [], total: 0 },
     isLoading: isLoadingMatakuliah,
+    refetch,
   } = useMatakuliah({
     q: search,
     _sort: sortBy,
@@ -39,6 +42,9 @@ const Matakuliah = () => {
   const { data: matakuliah = [] } = result;
   const totalCount = result.total;
   const totalPages = Math.ceil(totalCount / limit);
+
+  const cachedData = queryClient.getQueryData(["matakuliah"]);
+  const allMatakuliah = cachedData?.data || [];
 
   const { mutate: store } = useStoreMatakuliah();
   const { mutate: update } = useUpdateMatakuliah();
@@ -52,11 +58,13 @@ const Matakuliah = () => {
   const openAddModal = () => {
     setSelectedMatakuliah(null);
     setIsModalOpen(true);
+    refetch();
   };
 
   const openEditModal = (mk) => {
     setSelectedMatakuliah(mk);
     setIsModalOpen(true);
+    refetch();
   };
 
   const handleSubmit = (formData) => {
@@ -69,18 +77,20 @@ const Matakuliah = () => {
         () => {
           update({ id: selectedMatakuliah.id, data: formData });
           resetForm();
-          toastSuccess("Mata Kuliah berhasil diupdate!");
+          setTimeout(() => refetch(), 300);
         },
       );
     } else {
-      const exists = matakuliah.find((m) => m.kode === formData.kode);
+      const exists = allMatakuliah.find(
+        (m) => m.kode?.toUpperCase() === formData.kode?.toUpperCase(),
+      );
       if (exists) {
         toastError("Kode Mata Kuliah sudah terdaftar!");
         return;
       }
       store(formData);
-      toastSuccess("Mata Kuliah berhasil ditambahkan");
       resetForm();
+      setTimeout(() => refetch(), 300);
     }
   };
 
@@ -91,7 +101,7 @@ const Matakuliah = () => {
       `Apakah Anda yakin ingin menghapus ${matkulItem?.nama || "data"}?`,
       () => {
         remove(id);
-        toastSuccess(`Mata Kuliah ${matkulItem?.nama || ""} berhasil dihapus`);
+        setTimeout(() => refetch(), 300);
       },
     );
   };
@@ -204,7 +214,7 @@ const Matakuliah = () => {
         onClose={resetForm}
         onSubmit={handleSubmit}
         selectedMatakuliah={selectedMatakuliah}
-        matakuliah={matakuliah}
+        matakuliah={allMatakuliah}
       />
     </>
   );

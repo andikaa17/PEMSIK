@@ -30,6 +30,9 @@ const KelasModal = ({
     status: true,
   });
 
+  const [kodeError, setKodeError] = useState("");
+  const [isKodeExist, setIsKodeExist] = useState(false);
+
   const listMatakuliah = Array.isArray(matakuliah) ? matakuliah : [];
   const listDosen = Array.isArray(dosen) ? dosen : [];
 
@@ -51,6 +54,8 @@ const KelasModal = ({
         status:
           selectedKelas.status !== undefined ? selectedKelas.status : true,
       });
+      setKodeError("");
+      setIsKodeExist(false);
     } else {
       setForm({
         kode: "",
@@ -67,6 +72,8 @@ const KelasModal = ({
         mahasiswa_ids: [],
         status: true,
       });
+      setKodeError("");
+      setIsKodeExist(false);
     }
   }, [selectedKelas, isModalOpen]);
 
@@ -81,11 +88,96 @@ const KelasModal = ({
       finalValue = value ? Number(value) : "";
     }
     setForm({ ...form, [name]: type === "checkbox" ? checked : finalValue });
+
+    if (name === "kode") {
+      const trimmedKode = value.trim().toUpperCase();
+
+      if (trimmedKode === "") {
+        setKodeError("");
+        setIsKodeExist(false);
+        return;
+      }
+
+      const exists = listKelas.some(
+        (k) =>
+          k.kode?.toUpperCase() === trimmedKode &&
+          (!selectedKelas || k.id !== selectedKelas.id),
+      );
+
+      if (exists) {
+        setKodeError("Kode kelas sudah terdaftar di sistem!");
+        setIsKodeExist(true);
+      } else {
+        setKodeError("");
+        setIsKodeExist(false);
+      }
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!form.kode.trim()) {
+      toastError("Kode kelas wajib diisi!");
+      return;
+    }
+
+    if (!form.nama.trim()) {
+      toastError("Nama kelas wajib diisi!");
+      return;
+    }
+
+    if (!form.tahun.trim()) {
+      toastError("Tahun wajib diisi!");
+      return;
+    }
+
+    if (!form.matakuliah_id) {
+      toastError("Mata kuliah wajib dipilih!");
+      return;
+    }
+
+    if (!form.dosen_id) {
+      toastError("Dosen pengajar wajib dipilih!");
+      return;
+    }
+
+    if (!form.ruangan.trim()) {
+      toastError("Ruangan wajib diisi!");
+      return;
+    }
+
+    if (!form.hari) {
+      toastError("Hari wajib dipilih!");
+      return;
+    }
+
+    if (!form.jam_mulai) {
+      toastError("Jam mulai wajib diisi!");
+      return;
+    }
+
+    if (!form.jam_selesai) {
+      toastError("Jam selesai wajib diisi!");
+      return;
+    }
+
+    if (!form.kapasitas || form.kapasitas < 1) {
+      toastError("Kapasitas wajib diisi minimal 1!");
+      return;
+    }
+
+    const kodeExists = listKelas.some(
+      (k) =>
+        k.kode?.toUpperCase() === form.kode?.toUpperCase() &&
+        (!selectedKelas || k.id !== selectedKelas.id),
+    );
+
+    if (kodeExists) {
+      toastError("Kode kelas sudah terdaftar!");
+      return;
+    }
 
     const matkulId = form.matakuliah_id ? Number(form.matakuliah_id) : null;
     const dosenId = form.dosen_id ? Number(form.dosen_id) : null;
@@ -126,14 +218,41 @@ const KelasModal = ({
         <div className="grid grid-cols-2 gap-4">
           <div className="mb-4">
             <Label htmlFor="kode">Kode Kelas</Label>
-            <Input
-              type="text"
-              name="kode"
-              value={form.kode}
-              onChange={handleChange}
-              required
-            />
+            <div className="relative">
+              <Input
+                type="text"
+                name="kode"
+                value={form.kode}
+                onChange={handleChange}
+                readOnly={!!selectedKelas}
+                placeholder="Masukkan Kode"
+                className={`w-full border px-3 py-2 rounded pr-24 ${
+                  kodeError ? "border-red-500" : "border-gray-300"
+                }`}
+                required
+              />
+              {form.kode.trim() && (
+                <span
+                  className={`absolute right-2 top-2 px-2 py-1 text-xs rounded ${
+                    isKodeExist
+                      ? "bg-red-100 text-red-700"
+                      : "bg-green-100 text-green-700"
+                  }`}
+                >
+                  {isKodeExist ? "Terdaftar" : "Tersedia"}
+                </span>
+              )}
+            </div>
+            {kodeError && (
+              <p className="text-red-500 text-sm mt-1">{kodeError}</p>
+            )}
+            {!kodeError && form.kode.trim() && !isKodeExist && (
+              <p className="text-green-500 text-sm mt-1">
+                Kode tersedia, bisa digunakan
+              </p>
+            )}
           </div>
+
           <div className="mb-4">
             <Label htmlFor="nama">Nama Kelas</Label>
             <Input
@@ -141,9 +260,11 @@ const KelasModal = ({
               name="nama"
               value={form.nama}
               onChange={handleChange}
+              placeholder="Masukkan nama "
               required
             />
           </div>
+
           <div className="mb-4">
             <Label htmlFor="tahun">Tahun</Label>
             <Input
@@ -151,9 +272,11 @@ const KelasModal = ({
               name="tahun"
               value={form.tahun}
               onChange={handleChange}
+              placeholder="Masukkan tahun"
               required
             />
           </div>
+
           <div className="mb-4">
             <Label htmlFor="semester">Semester</Label>
             <select
@@ -211,6 +334,7 @@ const KelasModal = ({
               name="ruangan"
               value={form.ruangan}
               onChange={handleChange}
+              placeholder="Masukkan ruangan"
               required
             />
           </div>
@@ -263,6 +387,8 @@ const KelasModal = ({
               name="kapasitas"
               value={form.kapasitas}
               onChange={handleChange}
+              placeholder="Masukkan kapasitas"
+              min="1"
               required
             />
           </div>
@@ -281,11 +407,16 @@ const KelasModal = ({
             </div>
           </div>
         </div>
+
         <div className="flex justify-end gap-2 mt-4">
           <Button type="button" variant="secondary" onClick={onClose}>
             Batal
           </Button>
-          <Button type="submit" variant="primary">
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={!!kodeError || isKodeExist}
+          >
             Simpan
           </Button>
         </div>

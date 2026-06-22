@@ -7,7 +7,6 @@ import {
 } from "@/Utils/Apis/MatakuliahApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-// Hook untuk get all dengan pagination (dilakukan di client side)
 export const useMatakuliah = (query = {}) =>
   useQuery({
     queryKey: ["matakuliah"],
@@ -15,7 +14,6 @@ export const useMatakuliah = (query = {}) =>
     select: (res) => {
       let data = res?.data ?? [];
 
-      // Search (berdasarkan nama atau kode)
       if (query.q) {
         const keyword = query.q.toLowerCase();
         data = data.filter(
@@ -25,7 +23,6 @@ export const useMatakuliah = (query = {}) =>
         );
       }
 
-      // Sort
       if (query._sort) {
         data = [...data].sort((a, b) => {
           const valA = a[query._sort];
@@ -43,7 +40,6 @@ export const useMatakuliah = (query = {}) =>
 
       const total = data.length;
 
-      // Pagination
       if (query._page && query._limit) {
         const start = (query._page - 1) * query._limit;
         const end = start + query._limit;
@@ -63,7 +59,14 @@ export const useStoreMatakuliah = () => {
       queryClient.invalidateQueries({ queryKey: ["matakuliah"] });
       toastSuccess("Mata kuliah berhasil ditambahkan!");
     },
-    onError: () => toastError("Gagal menambahkan mata kuliah."),
+    onError: (error) => {
+      // Tangani error 409 Conflict (duplikasi kode)
+      if (error?.status === 409 || error?.code === "23505") {
+        toastError("Gagal menambahkan: Kode mata kuliah sudah terdaftar!");
+      } else {
+        toastError(error?.message || "Gagal menambahkan mata kuliah.");
+      }
+    },
   });
 };
 
@@ -75,7 +78,13 @@ export const useUpdateMatakuliah = () => {
       queryClient.invalidateQueries({ queryKey: ["matakuliah"] });
       toastSuccess("Mata kuliah berhasil diperbarui!");
     },
-    onError: () => toastError("Gagal memperbarui mata kuliah."),
+    onError: (error) => {
+      if (error?.status === 409 || error?.code === "23505") {
+        toastError("Gagal memperbarui: Kode mata kuliah sudah terdaftar!");
+      } else {
+        toastError(error?.message || "Gagal memperbarui mata kuliah.");
+      }
+    },
   });
 };
 
@@ -87,6 +96,8 @@ export const useDeleteMatakuliah = () => {
       queryClient.invalidateQueries({ queryKey: ["matakuliah"] });
       toastSuccess("Mata kuliah berhasil dihapus!");
     },
-    onError: () => toastError("Gagal menghapus mata kuliah."),
+    onError: (error) => {
+      toastError(error?.message || "Gagal menghapus mata kuliah.");
+    },
   });
 };
